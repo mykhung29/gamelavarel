@@ -1,0 +1,58 @@
+.add-category-form {
+    margin-top: 100px;
+}
+.add-category-form form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+.add-category-form h2 {
+    text-align: center;
+}
+
+.add-category-form textarea {
+    width: 100%;
+}
+input[type="text"],
+select,
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    box-sizing: border-box;
+}
+input[type="submit"] {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+.add-category-form span {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* .show_category */
+.show_category {
+    margin-top: 100px;
+}
+.show_category h2 {
+    text-align: center;
+}
+.show_category table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.show_category table,
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+.show_category th {
+    background-color: #f2f2f2;
+}
