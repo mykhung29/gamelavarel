@@ -145,12 +145,15 @@ Route::post('/save-product', function (Request $request) {
 
         // Di chuyển tệp ảnh vào thư mục lưu trữ của bạn
         $data['product_img'] = $filename;
-        $get_img->move('/public/img_upload/product', $filename);
+        $get_img->move('public/img_upload/product', $filename);
         DB::table('tbl_product')->insert($data);
         Session::put('message', 'Thêm sản phẩm thành công');
         return Redirect::to('/add-product');
     } else {
-        echo "Không có tệp ảnh được tải lên.";
+        $data['product_img'] = '';
+        DB::table('tbl_product')->update($data);
+        Session::put('message', 'Thêm sản phẩm thành công');
+        return Redirect::to('/add-product');
     }
 
 
@@ -159,8 +162,20 @@ Route::post('/save-product', function (Request $request) {
 
 Route::get('/show-product', function () {
     $all_product = DB::table('tbl_product')->get();
-    $manager_product = view('admin.show_product')->with('all_product', $all_product);
-    return view('admin_layout')->with('admin.show_product', $manager_product);
+    // $manager_product = view('admin.show_product')->with('all_product', $all_product);
+    // return view('admin_layout')->with('admin.show_product', $manager_product);
+
+    // $all_product = DB::table('tbl_product')->where('product_id', $product_id)->get();
+    $all_quantity = DB::table('tbl_product')
+        ->leftJoin('inventory', 'tbl_product.product_id', '=', 'inventory.product_id')
+        ->select('tbl_product.product_id', 'tbl_product.product_name', DB::raw('SUM(inventory.quantity_product) as total_quantity'))
+        ->groupBy('tbl_product.product_id', 'tbl_product.product_name')
+        ->get();
+
+    return view('admin.show_product', [
+        'all_product' => $all_product,
+        'inventory' => $all_quantity
+    ]);
 
 });
 
@@ -199,10 +214,57 @@ Route::post('/update-product/{product_id}', function (Request $request, $product
     $data['product_caterogy'] = $request->product_category;
     $data['product_name'] = $request->product_name;
     $data['product_price'] = $request->product_price;
-    $data['product_img'] = $request->product_img;
     $data['product_video'] = $request->product_video;
     $data['product_desc'] = $request->product_desc;
-    DB::table('tbl_product')->where('product_id', $product_id)->update($data);
-    Session::put('message', 'Cập nhật sản phẩm thành công');
+
+    $get_img = $request->file('product_img');
+    if ($get_img) {
+        // Lấy tên gốc của tệp
+        $originalName = $get_img->getClientOriginalName();
+
+        // Lấy đuôi của tệp
+        $extension = $get_img->getClientOriginalExtension();
+
+        // Tạo tên mới cho tệp ảnh để tránh trùng lặp
+        $filename = pathinfo($originalName, PATHINFO_FILENAME) . '_' . uniqid() . '.' . $extension;
+
+        // Di chuyển tệp ảnh vào thư mục lưu trữ của bạn
+        $data['product_img'] = $filename;
+        $get_img->move('public/img_upload/product', $filename);
+        DB::table('tbl_product')->where('product_id', $product_id)->update($data);
+        Session::put('message', 'Cập nhật sản phẩm thành công');
+        return Redirect::to('/show-product');
+    } else {
+        DB::table('tbl_product')->where('product_id', $product_id)->update($data);
+        Session::put('message', 'Cập nhật sản phẩm thành công');
+        return Redirect::to('/show-product');
+    }
+
+});
+
+Route::get('/manager-product', function () {
+    $all_product = DB::table('tbl_product')->orderBy('product_id', 'desc')->get();
+    return view('admin.inventory', [
+        'product' => $all_product
+    ]);
+
+});
+// quan li so luong
+Route::post('/store-inventory', function (Request $request) {
+    // Lấy dữ liệu từ form
+    $product_id = $request->input('product_id');
+    $quantity = $request->input('quantity');
+
+    // Tạo một mảng chứa dữ liệu cần thêm vào bảng inventory
+    $data = array ();
+    $data['product_id'] = $product_id;
+    $data['quantity_product'] = $quantity;
+
+    // Thêm dữ liệu vào bảng inventory
+    DB::table('inventory')->insert($data);
+
+    // DB::table('tbl_product')->where('product_id', $product_id)->update($data);
+
     return Redirect::to('/show-product');
+
 });

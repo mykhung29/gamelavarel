@@ -3,7 +3,15 @@
 
 <div class="show_category">
     <h2>Liệt Kê Danh Mục</h2>
-
+    <span style="color: green; font-size: 25px;">
+        <?php 
+          $message = session()->get('message'); // Sử dụng session() thay vì Session::
+          if ($message) {
+              echo $message;
+              session()->forget('message'); // Sử dụng session() thay vì Session:: và sử dụng forget() thay vì put()
+          }
+        ?>
+      </span>
 <table>
     <thead>
         <tr>
@@ -44,15 +52,6 @@
        
     </tbody>
 </table>
-        <span>
-            <?php 
-            $message = session()->get('message'); // Sử dụng session() thay vì Session::
-            if ($message) {
-                echo $message;
-                session()->forget('message'); // Sử dụng session() thay vì Session:: và sử dụng forget() thay vì put()
-            }
-            ?>
-        </span>
 </div>
 
 

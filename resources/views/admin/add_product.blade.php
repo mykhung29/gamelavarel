@@ -1,8 +1,16 @@
 @extends('admin_layout')
 @section('admin_content')
-    <div class="add-category-form">
+    <div class="add-product-form">
         <h2>Thêm Sản Phẩm</h2>
-
+        <span >
+            <?php 
+              $message = session()->get('message'); // Sử dụng session() thay vì Session::
+              if ($message) {
+                  echo $message;
+                  session()->forget('message'); // Sử dụng session() thay vì Session:: và sử dụng forget() thay vì put()
+              }
+            ?>
+          </span>
         <form action="{{URL::to('/save-product')}}" method="post" enctype="multipart/form-data">
             {{ csrf_field() }}
             <label for="product_name">Tên sản phẩm:</label><br>
@@ -36,15 +44,7 @@
 
             <button type="submit" name="add_category">Thêm</button>
         </form>
-        <span>
-            <?php 
-              $message = session()->get('message'); // Sử dụng session() thay vì Session::
-              if ($message) {
-                  echo $message;
-                  session()->forget('message'); // Sử dụng session() thay vì Session:: và sử dụng forget() thay vì put()
-              }
-            ?>
-          </span>
+       
     </div>
    
 @endsection

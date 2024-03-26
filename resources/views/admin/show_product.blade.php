@@ -1,9 +1,17 @@
 @extends('admin_layout')
 @section('admin_content')
 
-<div class="show_category">
-    <h2>Liệt Kê Danh Mục</h2>
-
+<div class="show_category show_product">
+    <h2>Liệt Kê Sản Phẩm</h2>
+    <span style="color: green; font-size: 25px;">
+        <?php 
+          $message = session()->get('message'); // Sử dụng session() thay vì Session::
+          if ($message) {
+              echo $message;
+              session()->forget('message'); // Sử dụng session() thay vì Session:: và sử dụng forget() thay vì put()
+          }
+        ?>
+      </span>
 <table>
     <thead>
         <tr>
@@ -13,17 +21,18 @@
             <th>Video</th>
             <th>Mô tả</th>
             <th>Trạng Thái</th>
+            <th>So Luong</th>
             <th class="actions">Tùy chỉnh</th>
             
         </tr>
     </thead>
     <tbody>
-        @foreach ($all_product as $key => $product)
+        @foreach ($all_product as $product)
              <tr>
                 <td>{{$product ->product_name}}</td>
                 <td>{{$product ->product_price}}</td>
-                {{-- <td><img src="public\img_upload\product\{{$product ->product_img}}" alt=""></td> --}}
-                <td><img src="https://media.licdn.com/dms/image/D4E0BAQG-i2j7Q2WFIA/company-logo_200_200/0/1694593112031/img_logo?e=2147483647&v=beta&t=o1304VK0Zbh3CBA-8_LNYNZZCNrQjMIBS-nwKrAMzbY" alt=""></td>
+                <td><img src="public\img_upload\product\{{$product ->product_img}}" alt="" width="70px"></td>
+                {{-- <td><img src="https://media.licdn.com/dms/image/D4E0BAQG-i2j7Q2WFIA/company-logo_200_200/0/1694593112031/img_logo?e=2147483647&v=beta&t=o1304VK0Zbh3CBA-8_LNYNZZCNrQjMIBS-nwKrAMzbY" alt=""></td> --}}
                 <td>{{$product ->product_video}}</td>
                 <td>{{$product ->product_desc}}</td>
                 <td>
@@ -40,6 +49,13 @@
                         };
                     ?>
                 </td>
+                
+                @foreach ($inventory as $number)
+                    @if($number->product_id == $product->product_id)
+                        <td>{{$number->total_quantity}} </td>
+                    @endif
+
+                @endforeach
                 <td>
                     <button><a href="{{URL::to('/edit-product/'.$product->product_id)}}"  rel="noopener noreferrer">Sửa</a></button>
                     {{-- <button>Xóa</button> --}}
@@ -52,15 +68,7 @@
        
     </tbody>
 </table>
-        <span>
-            <?php 
-            $message = session()->get('message'); // Sử dụng session() thay vì Session::
-            if ($message) {
-                echo $message;
-                session()->forget('message'); // Sử dụng session() thay vì Session:: và sử dụng forget() thay vì put()
-            }
-            ?>
-        </span>
+       
 </div>
 
 

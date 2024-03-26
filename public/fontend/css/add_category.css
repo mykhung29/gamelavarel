@@ -1,0 +1,63 @@
+.add-category-form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.add-category-form h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.add-category-form label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.add-category-form input[type="text"],
+.add-category-form textarea,
+.add-category-form select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.add-category-form button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.add-category-form button:hover {
+    background-color: #0056b3;
+}
+
+.add-category-form span {
+    display: block;
+    margin-top: 10px;
+    text-align: center;
+    color: #007bff;
+}
+/* Kiểu dáng cho màn hình có độ rộng lớn hơn hoặc bằng 768px */
+@media (min-width: 768px) {
+    .add-category-form {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+}
+
+/* Kiểu dáng cho màn hình nhỏ hơn 768px */
+@media (max-width: 767px) {
+    .add-category-form {
+        max-width: calc(100% - 20px);
+        margin: 0 auto;
+    }
+}
