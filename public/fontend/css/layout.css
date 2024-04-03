@@ -1,0 +1,292 @@
+@import url("https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap");
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Exo 2", sans-serif;
+}
+
+header {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+        rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+    background: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    flex-direction: column;
+}
+
+header nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+header nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 23px;
+}
+.mini-div {
+    background-color: gray;
+    width: 100%;
+    display: flex;
+    align-content: center;
+    justify-content: flex-end;
+    padding: 4px 0px;
+}
+.mini-div a {
+    margin-right: 15px;
+}
+.big-div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    padding: 30px 0px;
+}
+
+.search-box {
+    display: flex;
+}
+
+.search-box input[type="text"] {
+    padding: 8px;
+    border: none;
+    border-radius: 4px 0 0 4px;
+}
+
+.search-box button {
+    padding: 8px 15px;
+    background-color: gray;
+    color: white;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+}
+
+.search-box button:hover {
+    background-color: #45a049;
+}
+@media only screen and (min-width: 768px) {
+    .submenu {
+        display: none; /* Ẩn submenu mặc định */
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .services:hover .submenu {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        background: black;
+    }
+
+    .submenu li {
+        float: none;
+        padding: 10px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .big-div nav {
+        display: none;
+    }
+    .burger-menu-btn {
+        display: block;
+    }
+    .burger-menu-btn i {
+        font-size: 2rem;
+        color: #333;
+    }
+}
+
+.burger-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.burger-menu-btn:focus {
+    outline: none;
+}
+
+.burger-menu-btn i {
+    font-size: 24px;
+}
+
+@media screen and (max-width: 768px) {
+    .submenu {
+        display: none;
+    }
+}
+
+main {
+    padding-top: 200px;
+    margin-bottom: 20px;
+}
+.container-layout {
+    display: flex;
+    margin: 0 100px;
+    border: 1.5px solid grey;
+    margin: 0px 100px;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.left-column {
+    flex: 2;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.left-column .brand-product-selection {
+    border: 1px gray solid;
+    border-radius: 10px;
+}
+.brand-product-selection ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+}
+
+.brand-selection a {
+    text-decoration: none;
+}
+.right-column {
+    flex: 7;
+    flex-wrap: wrap;
+}
+
+.right-column-item {
+    flex-basis: calc(100% / 7);
+    text-align: center;
+    background-color: lightgreen;
+    border: 1px solid darkgreen;
+}
+
+footer {
+    background-color: white;
+    color: #fff;
+    padding: 10px 0;
+    box-shadow: (14, 30, 37, 0.12) 0px 2px 4px 0px,
+        rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.footer-section {
+    flex-basis: 30%;
+    margin-bottom: 20px;
+}
+
+.footer-section h3 {
+    color: black;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.footer-section p {
+    font-size: 14px;
+}
+
+.footer-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section a {
+    color: black;
+    text-decoration: none;
+}
+
+.contact-form textarea {
+    height: 100px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+.btn {
+    cursor: pointer;
+    display: inline-block;
+    background: grey;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.btn:hover {
+    background: gray;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding: 10px;
+    background-color: #222;
+    color: #fff;
+}
+
+@media only screen and (min-width: 768px) {
+    .footer-content {
+        display: flex;
+    }
+
+    .footer-section {
+        /* flex-basis: auto; */
+        margin-bottom: 0;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .footer-content {
+        flex-direction: column;
+    }
+
+    .footer-section {
+        margin-bottom: 20px;
+    }
+    .footer-section .about,
+    .link,
+    .contact-form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 20px;
+    }
+    .contact-form form {
+        width: 80%;
+    }
+}

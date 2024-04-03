@@ -12,16 +12,16 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 
 
-Route::get('/trangchu', function () {
-    return view('pages.home');
-});
+
 
 Route::get('/', function () {
-    return view('pages.home');
+    $all_product = DB::table('tbl_product')->get();
+    return view('pages.home', ['all_product' => $all_product]);
 });
 
 
 // admin
+
 Route::get('/admin', function () {
     return view('admin_login');
 });
@@ -267,4 +267,20 @@ Route::post('/store-inventory', function (Request $request) {
 
     return Redirect::to('/show-product');
 
+});
+// user
+
+Route::get('/add-user', function () {
+    return view('admin.add_user');
+});
+
+// san pham
+Route::get('/moreinfor', function () {
+    return view('pages.product_detail');
+});
+
+
+Route::get('/moreinfor/{product_id}', function ($product_id) {
+    $detail_product = DB::table('tbl_product')->where('product_id', $product_id)->get();
+    return view('pages.product_detail', ['detail_product' => $detail_product]);
 });

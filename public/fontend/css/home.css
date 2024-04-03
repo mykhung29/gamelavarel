@@ -1,0 +1,70 @@
+/* styles.css */
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(
+        4,
+        1fr
+    ); /* Hiển thị 4 cột với kích thước bằng nhau */
+    gap: 20px;
+    padding: 20px;
+}
+
+.product-card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px 0px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.product-card img {
+    width: 170px;
+    height: 200px;
+    border-radius: 5px;
+}
+
+.product-card h3 {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.product-card p {
+    margin-bottom: 10px;
+}
+
+.product-card span {
+    font-weight: bold;
+    color: #f00;
+    font-size: 18px;
+}
+
+.product-card button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.product-card button:hover {
+    background-color: #0056b3;
+}
+@media only screen and (max-width: 767px) {
+    .container {
+        grid-template-columns: repeat(
+            2,
+            1fr
+        ); /* Hiển thị 2 cột trên mỗi dòng cho màn hình nhỏ hơn */
+        padding: 10px;
+    }
+    .product-card img {
+        max-width: 130px;
+        height: auto;
+        border-radius: 5px;
+    }
+}

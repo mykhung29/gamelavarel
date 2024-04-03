@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Left Sidebar Menu</title>
+    <title>Dashbroad</title>
     <link rel="stylesheet" href="{{asset('public/fontend/css/admin_layout.css')}}">
     <link rel="stylesheet" href="{{asset('public/fontend/css/add_category.css')}}">
     <link rel="stylesheet" href="{{asset('public/fontend/css/show_category.css')}}">
     <link rel="stylesheet" href="{{asset('public/fontend/css/add_product.css')}}">
-
+    <link rel="stylesheet" href="{{asset('public/fontend/css/add_user.css')}}">
 </head>
 <body>
     <div class="sidebar">
@@ -37,6 +37,13 @@
               <li><a href="#">Danh mục 3</a></li>
           </ul>
       </li>
+      <li class="dropdown">
+        <a class="title" href="#">Quản lí tai khoan</a>
+        <ul class="submenu">
+            <li><a href="{{URL::to('/add-user')}}">Them tai khoan</a></li>
+            <li><a href="{{URL::to('/show-user')}}">Liet ke tai khoan</a></li>
+        </ul>
+    </li>
         <li><a  class="title" href="{{URL::to('/logout')}}">Đăng xuất</a></li>
         </ul>
     </div>
