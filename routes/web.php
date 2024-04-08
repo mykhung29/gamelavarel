@@ -1,286 +1,64 @@
 <?php
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\GameCategoryController;
+use App\Http\Controllers\ProductController;
+use Illuminate\Http\Request;
+use App\Http\Middleware\CheckAdmin;
+
 
 use Illuminate\Support\Facades\Route;
-use app\Http\Controllers\HomeController;
-use Illuminate\Http\Request;
 
 
+//home
+Route::get('/', [HomeController::class, 'index']);
+Route::get('/category/{category_name}', [HomeController::class, 'category']);
+
+
+// // admin
+Route::get('/admin', [AdminController::class, 'login']);
+Route::get('/dashbroad', [AdminController::class, 'index']);
+Route::post('/admin-dashbroad', [AdminController::class, 'login_check']);
+Route::get('/logout', [AdminController::class, 'logout']);
+
+// // category product
+Route::get('/add-category-product', [CategoryController::class, 'addCategoryProduct']);
+Route::get('/show-category-product', [CategoryController::class, 'showCategoryProduct']);
+Route::post('/save-category-product', [CategoryController::class, 'saveCategoryProduct']);
+Route::get('/active-category-product/{category_id}', [CategoryController::class, 'activeCategoryProduct']);
+Route::get('/unactive-category-product/{category_id}', [CategoryController::class, 'unactiveCategoryProduct']);
+Route::get('/delete-category-product/{category_id}', [CategoryController::class, 'deleteCategoryProduct']);
+Route::get('/edit-category-product/{category_id}', [CategoryController::class, 'editCategoryProduct']);
+Route::post('/update-category-product/{category_id}', [CategoryController::class, 'updateCategoryProduct']);
+
+// // product
+Route::get('/add-product', [ProductController::class, 'addProduct']);
+Route::get('/show-product', [ProductController::class, 'showProduct']);
+Route::post('/save-product', [ProductController::class, 'saveProduct']);
+Route::get('/active-product/{product_id}', [ProductController::class, 'activeProduct']);
+Route::get('/unactive-product/{product_id}', [ProductController::class, 'unactiveProduct']);
+Route::get('/delete-product/{product_id}', [ProductController::class, 'deleteProduct']);
+Route::get('/edit-product/{product_id}', [ProductController::class, 'editProduct']);
+Route::post('/update-product/{product_id}', [ProductController::class, 'updateProduct']);
+Route::get('/manager-product', [ProductController::class, 'managerProduct']);
+Route::post('/store-inventory', [ProductController::class, 'storeInventory']);
+//type product
+Route::get('/add-type', [GameCategoryController::class, 'create']);
+Route::get('/show-type', [GameCategoryController::class, 'index']);
+Route::post('/save-type', [GameCategoryController::class, 'store']);
+Route::get('/delete-type/{id}', [GameCategoryController::class, 'delete']);
+
+
+// // user
+
+Route::get('/register', [UserController::class, 'index']);
+Route::post('/create', [UserController::class, 'create']);
+Route::post('/login-check', [UserController::class, 'login']);
+
+// // san pham
+
+Route::get('/moreinfor/{product_id}', [HomeController::class, 'detail']);
+Route::get('/login', [HomeController::class, 'login']);
 
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\DB;
-use App\Http\Requests;
-use Illuminate\Support\Facades\Redirect;
-
-
-
-
-Route::get('/', function () {
-    $all_product = DB::table('tbl_product')->get();
-    return view('pages.home', ['all_product' => $all_product]);
-});
-
-
-// admin
-
-Route::get('/admin', function () {
-    return view('admin_login');
-});
-Route::get('/dashbroad', function () {
-    return view('admin.dashbroad');
-});
-
-Route::post('/admin-dashbroad', function (Request $request) {
-    $admin_email = $request->user_login;
-    $admin_password = $request->pass_login;
-
-    $result = DB::table('tbl_admin')->where('admin_email', $admin_email)->where('admin_password', $admin_password)->first();
-
-    if ($result) {
-        Session::put('admin_name', $result->admin_name);
-        Session::put('admin_id', $result->admin_id);
-        // return view('admin.dashbroad');
-        return Redirect::to('/dashbroad');
-    } else {
-        Session::put('message', 'Error password or email not exist');
-        return Redirect::to('/admin');
-    }
-});
-
-Route::get('/logout', function () {
-    return view('admin_login');
-});
-
-// category product
-
-Route::get('/add-category-product', function () {
-    return view('admin.add_category');
-});
-
-Route::get('/show-category-product', function () {
-    $all_category = DB::table('tbl_category')->get();
-    $manager_category = view('admin.show_category')->with('all_caterogy', $all_category);
-    return view('admin_layout')->with('admin.show_category', $manager_category);
-
-});
-
-Route::post('/save-category-product', function (Request $request) {
-
-    $data = array ();
-    $data['category_name'] = $request->category_name;
-    $data['category_desc'] = $request->category_description;
-    $data['category_status'] = $request->category_type;
-    DB::table('tbl_category')->insert($data);
-    Session::put('message', 'Thêm danh mục thành công');
-    return Redirect::to('/add-category-product');
-});
-
-Route::get('/active-category-product/{category_id}', function ($category_id) {
-    DB::table('tbl_category')->where('category_id', $category_id)->update(['category_status' => 1]);
-    Session::put('message', 'Đã hiện');
-    return Redirect::to('/show-category-product');
-
-});
-
-Route::get('/unactive-category-product/{category_id}', function ($category_id) {
-    DB::table('tbl_category')->where('category_id', $category_id)->update(['category_status' => 0]);
-    Session::put('message', 'Đã ẩn');
-    return Redirect::to('/show-category-product');
-});
-
-Route::get('/delete-category-product/{category_id}', function ($category_id) {
-    DB::table('tbl_category')->where('category_id', $category_id)->delete();
-    Session::put('message', 'Đã xóa');
-    return Redirect::to('/show-category-product');
-});
-
-Route::get('/edit-category-product/{category_id}', function ($category_id) {
-    $all_category = DB::table('tbl_category')->where('category_id', $category_id)->get();
-    $manager_category = view('admin.edit_category')->with('edit_caterogy', $all_category);
-    return view('admin_layout')->with('admin.edit_category', $manager_category);
-});
-
-Route::post('/update-category-product/{category_id}', function (Request $request, $category_id) {
-
-    $data = array ();
-    $data['category_name'] = $request->category_name;
-    $data['category_desc'] = $request->category_description;
-    DB::table('tbl_category')->where('category_id', $category_id)->update($data);
-    Session::put('message', 'Cập nhật danh mục thành công');
-    return Redirect::to('/show-category-product');
-});
-
-// product
-
-Route::get('/add-product', function () {
-    $cate_product = DB::table('tbl_category')->orderBy('category_id', 'desc')->get();
-    return view('admin.add_product')->with('cate_product', $cate_product);
-});
-
-Route::get('/show-product', function () {
-    $all_product = DB::table('tbl_product')->get();
-    $manager_product = view('admin.show_product')->with('all_product', $all_product);
-    return view('admin_layout')->with('admin.show_product', $manager_product);
-
-});
-
-Route::post('/save-product', function (Request $request) {
-    $data = array ();
-    $data['product_caterogy'] = $request->product_category;
-    $data['product_name'] = $request->product_name;
-    $data['product_price'] = $request->product_price;
-    $data['product_video'] = $request->product_video;
-    $data['product_desc'] = $request->product_desc;
-    $data['product_status'] = $request->product_status;
-
-    $get_img = $request->file('product_img');
-    if ($get_img) {
-        // Lấy tên gốc của tệp
-        $originalName = $get_img->getClientOriginalName();
-
-        // Lấy đuôi của tệp
-        $extension = $get_img->getClientOriginalExtension();
-
-        // Tạo tên mới cho tệp ảnh để tránh trùng lặp
-        $filename = pathinfo($originalName, PATHINFO_FILENAME) . '_' . uniqid() . '.' . $extension;
-
-        // Di chuyển tệp ảnh vào thư mục lưu trữ của bạn
-        $data['product_img'] = $filename;
-        $get_img->move('public/img_upload/product', $filename);
-        DB::table('tbl_product')->insert($data);
-        Session::put('message', 'Thêm sản phẩm thành công');
-        return Redirect::to('/add-product');
-    } else {
-        $data['product_img'] = '';
-        DB::table('tbl_product')->update($data);
-        Session::put('message', 'Thêm sản phẩm thành công');
-        return Redirect::to('/add-product');
-    }
-
-
-
-});
-
-Route::get('/show-product', function () {
-    $all_product = DB::table('tbl_product')->get();
-    // $manager_product = view('admin.show_product')->with('all_product', $all_product);
-    // return view('admin_layout')->with('admin.show_product', $manager_product);
-
-    // $all_product = DB::table('tbl_product')->where('product_id', $product_id)->get();
-    $all_quantity = DB::table('tbl_product')
-        ->leftJoin('inventory', 'tbl_product.product_id', '=', 'inventory.product_id')
-        ->select('tbl_product.product_id', 'tbl_product.product_name', DB::raw('SUM(inventory.quantity_product) as total_quantity'))
-        ->groupBy('tbl_product.product_id', 'tbl_product.product_name')
-        ->get();
-
-    return view('admin.show_product', [
-        'all_product' => $all_product,
-        'inventory' => $all_quantity
-    ]);
-
-});
-
-Route::get('/active-product/{product_id}', function ($product_id) {
-    DB::table('tbl_product')->where('product_id', $product_id)->update(['product_status' => 1]);
-    Session::put('message', 'Đã hiện');
-    return Redirect::to('/show-product');
-
-});
-
-Route::get('/unactive-product/{product_id}', function ($product_id) {
-    DB::table('tbl_product')->where('product_id', $product_id)->update(['product_status' => 0]);
-    Session::put('message', 'Đã ẩn');
-    return Redirect::to('/show-product');
-});
-
-Route::get('/delete-product/{product_id}', function ($product_id) {
-    DB::table('tbl_product')->where('product_id', $product_id)->delete();
-    Session::put('message', 'Đã xóa');
-    return Redirect::to('/show-product');
-});
-
-Route::get('/edit-product/{product_id}', function ($product_id) {
-    $all_product = DB::table('tbl_product')->where('product_id', $product_id)->get();
-    $all_category = DB::table('tbl_category')->orderBy('category_id', 'desc')->get();
-
-    return view('admin.edit_product', [
-        'edit_product' => $all_product,
-        'edit_category' => $all_category
-    ]);
-});
-
-Route::post('/update-product/{product_id}', function (Request $request, $product_id) {
-
-    $data = array ();
-    $data['product_caterogy'] = $request->product_category;
-    $data['product_name'] = $request->product_name;
-    $data['product_price'] = $request->product_price;
-    $data['product_video'] = $request->product_video;
-    $data['product_desc'] = $request->product_desc;
-
-    $get_img = $request->file('product_img');
-    if ($get_img) {
-        // Lấy tên gốc của tệp
-        $originalName = $get_img->getClientOriginalName();
-
-        // Lấy đuôi của tệp
-        $extension = $get_img->getClientOriginalExtension();
-
-        // Tạo tên mới cho tệp ảnh để tránh trùng lặp
-        $filename = pathinfo($originalName, PATHINFO_FILENAME) . '_' . uniqid() . '.' . $extension;
-
-        // Di chuyển tệp ảnh vào thư mục lưu trữ của bạn
-        $data['product_img'] = $filename;
-        $get_img->move('public/img_upload/product', $filename);
-        DB::table('tbl_product')->where('product_id', $product_id)->update($data);
-        Session::put('message', 'Cập nhật sản phẩm thành công');
-        return Redirect::to('/show-product');
-    } else {
-        DB::table('tbl_product')->where('product_id', $product_id)->update($data);
-        Session::put('message', 'Cập nhật sản phẩm thành công');
-        return Redirect::to('/show-product');
-    }
-
-});
-
-Route::get('/manager-product', function () {
-    $all_product = DB::table('tbl_product')->orderBy('product_id', 'desc')->get();
-    return view('admin.inventory', [
-        'product' => $all_product
-    ]);
-
-});
-// quan li so luong
-Route::post('/store-inventory', function (Request $request) {
-    // Lấy dữ liệu từ form
-    $product_id = $request->input('product_id');
-    $quantity = $request->input('quantity');
-
-    // Tạo một mảng chứa dữ liệu cần thêm vào bảng inventory
-    $data = array ();
-    $data['product_id'] = $product_id;
-    $data['quantity_product'] = $quantity;
-
-    // Thêm dữ liệu vào bảng inventory
-    DB::table('inventory')->insert($data);
-
-    // DB::table('tbl_product')->where('product_id', $product_id)->update($data);
-
-    return Redirect::to('/show-product');
-
-});
-// user
-
-Route::get('/add-user', function () {
-    return view('admin.add_user');
-});
-
-// san pham
-Route::get('/moreinfor', function () {
-    return view('pages.product_detail');
-});
-
-
-Route::get('/moreinfor/{product_id}', function ($product_id) {
-    $detail_product = DB::table('tbl_product')->where('product_id', $product_id)->get();
-    return view('pages.product_detail', ['detail_product' => $detail_product]);
-});

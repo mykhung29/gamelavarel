@@ -1,4 +1,5 @@
-.add-category-form {
+.add-category-form,
+.add-categorygame-form {
     background-color: #f9f9f9;
     padding: 20px;
     border-radius: 5px;
@@ -7,19 +8,24 @@
     margin: 0 auto;
 }
 
-.add-category-form h2 {
+.add-category-form h2,
+.add-categorygame-form h2 {
     margin-bottom: 20px;
     text-align: center;
 }
 
-.add-category-form label {
+.add-category-form label,
+.add-categorygame-form label {
     display: block;
     margin-bottom: 10px;
 }
 
-.add-category-form input[type="text"],
-.add-category-form textarea,
-.add-category-form select {
+.add-category-form inptarea,
+.add-category-form selut[type="text"],
+.add-category-form texect,
+.add-categorygame-form input[type="text"],
+.add-categorygame-form textarea,
+.add-categorygame-form select {
     width: calc(100% - 20px);
     padding: 10px;
     margin-bottom: 15px;
@@ -27,7 +33,8 @@
     border-radius: 3px;
 }
 
-.add-category-form button {
+.add-category-form button,
+.add-categorygame-form button {
     background-color: #007bff;
     color: #fff;
     border: none;
@@ -36,11 +43,13 @@
     cursor: pointer;
 }
 
-.add-category-form button:hover {
+.add-category-form button:hover,
+.add-categorygame-form button:hover {
     background-color: #0056b3;
 }
 
-.add-category-form span {
+.add-category-form span,
+.add-categorygame-form span {
     display: block;
     margin-top: 10px;
     text-align: center;
@@ -48,7 +57,8 @@
 }
 /* Kiểu dáng cho màn hình có độ rộng lớn hơn hoặc bằng 768px */
 @media (min-width: 768px) {
-    .add-category-form {
+    .add-category-form,
+    .add-categorygame-form {
         max-width: 500px;
         margin: 0 auto;
     }
@@ -56,7 +66,8 @@
 
 /* Kiểu dáng cho màn hình nhỏ hơn 768px */
 @media (max-width: 767px) {
-    .add-category-form {
+    .add-category-form,
+    .add-categorygame-form {
         max-width: calc(100% - 20px);
         margin: 0 auto;
     }

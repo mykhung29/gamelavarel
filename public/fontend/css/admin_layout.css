@@ -1,7 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap");
+
 body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
+    font-family: "Exo 2", sans-serif;
 }
 
 .sidebar {
@@ -34,23 +37,22 @@ body {
     transition: 0.3s;
 }
 
-.sidebar ul li a:hover {
+.sidebar ul a:hover {
     background-color: #555;
 }
 
 .dropdown .submenu {
     display: none;
     margin-top: 15px;
+    transition: all 0.3s ease; /* Add this line */
 }
 .dropdown .submenu a {
-    background-color: #555;
-    border-radius: 10px;
     padding: 9px 14px;
+    border-radius: 5px;
 }
 .dropdown .title {
-    background: blue;
     padding: 10px;
-    border-radius: 20px;
+    border-radius: 5px;
 }
 
 .dropdown:hover .submenu {

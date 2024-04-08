@@ -35,6 +35,13 @@
                     <option value="{{$cate->category_name}}">{{$cate->category_name}}</option>
                 @endforeach
             </select><br><br>
+
+            <label for="product_status">Thể loại:</label><br>
+            <select  name="product_type">
+                @foreach ($type_product as $key => $type)
+                    <option value="{{$type->name}}">{{$type->name}}</option>
+                @endforeach
+            </select><br><br>
             
             <label for="product_status">Trạng thái sản phẩm:</label><br>
             <select id="product_status" name="product_status">

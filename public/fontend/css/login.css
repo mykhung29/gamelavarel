@@ -1,0 +1,52 @@
+.container-login,
+.container-register {
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.container-login h2,
+.container-register h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.container-login input[type="text"],
+.container-login input[type="password"],
+.container-register input[type="text"],
+.container-register input[type="password"],
+.container-register input[type="email"] {
+    width: 100%;
+    padding: 15px 0;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.container-login button[type="submit"],
+.container-register button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 8px 0px;
+}
+
+.container-login button[type="submit"]:hover,
+.container-register button[type="submit"]:hover {
+    background-color: #45a049;
+}
+.footer-login {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.footer-login a {
+    text-decoration: none;
+    color: black;
+}

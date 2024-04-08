@@ -9,40 +9,33 @@
     <link rel="stylesheet" href="{{asset('public/fontend/css/show_category.css')}}">
     <link rel="stylesheet" href="{{asset('public/fontend/css/add_product.css')}}">
     <link rel="stylesheet" href="{{asset('public/fontend/css/add_user.css')}}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
     <div class="sidebar">
         <ul>
-            <li><a class="title" href="#">Tổng quan</a></li>
+            <li><a class="title" href="#"style="
+                padding: 10px;
+                border-radius: 5px;
+            ">Tổng quan</a></li>
             <li class="dropdown">
-                <a class="title" href="#">Quản lí danh mục</a>
-                <ul class="submenu">
-                    <li><a  href="{{URL::to('/add-category-product')}}" >Thêm danh mục</a></li>
-                    <li><a  href="{{URL::to('/show-category-product')}}">Liệt kê</a></li>
-                </ul>
+                <a class="title" href="{{URL::to('/show-category-product')}}">Quản lí danh mục</a>
             </li>
             <li class="dropdown">
-              <a class="title" href="#">Quản lí sản phẩm</a>
-              <ul class="submenu">
-                <li> <a href="{{URL::to('/add-product')}}" >Thêm sản phẩm</a> </li>
-                <li> <a href="{{URL::to('/show-product')}}">Liệt kê</a></li>
-                <li> <a href="{{URL::to('/manager-product')}}">Quan li nhap hang</a></li>
-              </ul>
+                <a class="title" href="{{URL::to('/show-type')}}">Quản lí thể loại</a>
+            </li>
+            <li class="dropdown">
+              <a class="title" href="{{URL::to('/show-product')}}">Quản lí sản phẩm</a>
           </li>
         <li class="dropdown">
           <a class="title" href="#">Quản lí đơn hàng</a>
-          <ul class="submenu">
-              <li><a href="#">Danh mục 1</a></li>
-              <li><a href="#">Danh mục 2</a></li>
-              <li><a href="#">Danh mục 3</a></li>
-          </ul>
       </li>
       <li class="dropdown">
-        <a class="title" href="#">Quản lí tai khoan</a>
-        <ul class="submenu">
-            <li><a href="{{URL::to('/add-user')}}">Them tai khoan</a></li>
-            <li><a href="{{URL::to('/show-user')}}">Liet ke tai khoan</a></li>
-        </ul>
+        <a class="title" href="{{URL::to('/show-user')}}">Quản lí tài khoản</a>
+        {{-- <ul class="submenu">
+            <li><a href="{{URL::to('/add-user')}}">Thêm tài khoản</a></li>
+            <li><a href="{{URL::to('/show-user')}}">Liệt kê tài khoản</a></li>
+        </ul> --}}
     </li>
         <li><a  class="title" href="{{URL::to('/logout')}}">Đăng xuất</a></li>
         </ul>

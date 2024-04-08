@@ -5,133 +5,158 @@ body {
     box-sizing: border-box;
     font-family: "Exo 2", sans-serif;
 }
-
 header {
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
-        rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-    background: white;
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    flex-direction: column;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     position: fixed;
     width: 100%;
-    flex-direction: column;
+    z-index: 1000;
+}
+.mini-div {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    background-color: gainsboro;
+}
+.mini-div a {
+    margin: 3px 15px;
+}
+.big-div {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 30px;
+}
+.logo {
+    font-size: 24px;
 }
 
-header nav ul {
-    list-style-type: none;
+.nav-links {
+    display: flex;
+    list-style: none;
     margin: 0;
     padding: 0;
 }
 
-header nav ul li {
-    display: inline;
-    margin-right: 20px;
+.nav-links li {
+    margin-right: 40px;
+    position: relative;
 }
 
-header nav ul li a {
+.nav-links li:last-child {
+    margin-right: 0;
+}
+
+.nav-links li a {
     text-decoration: none;
     color: black;
-    font-size: 23px;
-}
-.mini-div {
-    background-color: gray;
-    width: 100%;
-    display: flex;
-    align-content: center;
-    justify-content: flex-end;
-    padding: 4px 0px;
-}
-.mini-div a {
-    margin-right: 15px;
-}
-.big-div {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%;
-    padding: 30px 0px;
+    transition: color 0.3s ease;
+    font-size: 25px;
 }
 
-.search-box {
-    display: flex;
+.nav-links li a:hover {
+    color: gainsboro;
+    /* Màu khi hover */
 }
 
-.search-box input[type="text"] {
-    padding: 8px;
-    border: none;
-    border-radius: 4px 0 0 4px;
-}
-
-.search-box button {
-    padding: 8px 15px;
-    background-color: gray;
-    color: white;
-    border: none;
-    border-radius: 0 4px 4px 0;
+.burger {
+    font-size: 24px;
     cursor: pointer;
+    display: none;
 }
 
-.search-box button:hover {
-    background-color: #45a049;
+.submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #333;
+    z-index: 100;
+    padding: 10px 0;
+    border-radius: 10px;
+    width: 130px;
 }
-@media only screen and (min-width: 768px) {
-    .submenu {
-        display: none; /* Ẩn submenu mặc định */
-        position: absolute;
-        background-color: #f9f9f9;
-        min-width: 160px;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        z-index: 1;
-    }
 
-    .services:hover .submenu {
-        display: flex;
-        justify-content: center;
+.submenu li {
+    padding: 10px;
+    font-size: 10px;
+    margin: 0;
+    list-style-type: none;
+    border-bottom: 1px solid white;
+}
+.submenu li:last-child {
+    border-bottom: none;
+}
+.submenu li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    transition: color 0.3s ease;
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.has-submenu:hover .submenu {
+    display: block;
+}
+
+@media screen and (max-width: 768px) {
+    .nav-links {
+        display: none;
         flex-direction: column;
         align-items: center;
-        background: black;
+        padding: 0;
+    }
+    .big-div {
+        flex-direction: column;
+    }
+    .nav-links li {
+        margin: 10px 0;
     }
 
-    .submenu li {
-        float: none;
-        padding: 10px;
+    #toggle:checked ~ nav .nav-links {
+        display: flex;
     }
-}
 
-@media screen and (max-width: 768px) {
-    .big-div nav {
-        display: none;
-    }
-    .burger-menu-btn {
+    .burger {
         display: block;
     }
-    .burger-menu-btn i {
-        font-size: 2rem;
-        color: #333;
+    .brand-product-selection h2 {
+        font-weight: 400;
+        font-size: 12px;
+    }
+    .brand-product-selection a {
+        font-weight: 400;
+        font-size: 12px;
     }
 }
+.search-box {
+    position: relative;
+}
 
-.burger-menu-btn {
-    display: none;
-    background: none;
+.search-txt {
+    width: 200px;
+    height: 30px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.search-btn {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: 40px;
     border: none;
+    background: #ccc;
+    border-radius: 5px;
     cursor: pointer;
-    padding: 10px;
 }
-
-.burger-menu-btn:focus {
-    outline: none;
-}
-
-.burger-menu-btn i {
-    font-size: 24px;
-}
-
-@media screen and (max-width: 768px) {
-    .submenu {
-        display: none;
-    }
+.search-btn i {
+    font-size: 25px;
 }
 
 main {
@@ -140,15 +165,14 @@ main {
 }
 .container-layout {
     display: flex;
-    margin: 0 100px;
+    margin: 0 180px;
     border: 1.5px solid grey;
-    margin: 0px 100px;
     padding: 5px;
     border-radius: 10px;
 }
 
 .left-column {
-    flex: 2;
+    flex: 1;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -163,8 +187,15 @@ main {
     padding: 0;
     text-align: center;
 }
-
-.brand-selection a {
+.brand-selection {
+    text-align: center;
+}
+.brand-product-selection h2 {
+    font-weight: 450;
+    font-size: 20px;
+}
+.brand-selection a,
+.product-type-selection a {
     text-decoration: none;
 }
 .right-column {
@@ -183,10 +214,11 @@ footer {
     background-color: white;
     color: #fff;
     padding: 10px 0;
-    box-shadow: (14, 30, 37, 0.12) 0px 2px 4px 0px,
-        rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
-
+footer p {
+    color: black;
+}
 .footer-content {
     display: flex;
     justify-content: space-between;
@@ -233,7 +265,7 @@ footer {
     margin-bottom: 10px;
     padding: 10px;
     border-radius: 5px;
-    border: none;
+    border: 1px solid gainsboro;
 }
 
 .btn {
@@ -252,10 +284,11 @@ footer {
 }
 
 .footer-bottom {
+    margin-top: 8px;
     text-align: center;
     padding: 10px;
-    background-color: #222;
-    color: #fff;
+    background-color: gainsboro;
+    color: black;
 }
 
 @media only screen and (min-width: 768px) {
@@ -273,12 +306,14 @@ footer {
     .footer-content {
         flex-direction: column;
     }
-
+    .container-layout {
+        margin: 0;
+    }
     .footer-section {
         margin-bottom: 20px;
     }
     .footer-section .about,
-    .link,
+    .links,
     .contact-form {
         display: flex;
         justify-content: center;
@@ -288,5 +323,9 @@ footer {
     }
     .contact-form form {
         width: 80%;
+    }
+    .about,
+    .links {
+        text-align: center;
     }
 }

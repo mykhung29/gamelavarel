@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{asset('public/fontend/css/layout.css')}}">
     <link rel="stylesheet" href="{{asset('public/fontend/css/home.css')}}">
     <link rel="stylesheet" href="{{asset('public/fontend/css/product_detail.css')}}">
+    <link rel="stylesheet" href="{{asset('public/fontend/css/login.css')}}">
 
     
 </head>
@@ -15,23 +16,42 @@
    
     <header>
         <div class="mini-div">
-            <a href="http://" target="_blank" rel="noopener noreferrer">
-                <i class='bx bx-user'>Đăng nhập</i>
-            </a>
+            {{-- <a href="{{URL::to('/login')}}"  rel="noopener noreferrer">
+               
+                <i class='bx bx-user'>
+                    @if(Session::has('name'))
+                        Chào, {{ Session::get('name') }}
+                    @else
+                        Đăng nhập
+                    @endif
+                </i>
+            </a> --}}
+            @if(Session::has('name'))
+                <a href="{{URL::to('/logout')}}"  rel="noopener noreferrer">
+                    <i class='bx bx-user'>Chào, {{ Session::get('name') }}</i>
+                </a>
+            @else
+                <a href="{{URL::to('/login')}}"  rel="noopener noreferrer">
+                    <i class='bx bx-user'> Đăng nhập</i>
+                </a>
+            @endif
+
+
             <a href="http://" target="_blank" rel="noopener noreferrer">
                 <i class='bx bx-cart-alt'>Giỏ hàng()</i>
             </a>
             
         </div>
         <div class="big-div">
-            <button class="burger-menu-btn">
-                <i class='bx bx-menu'></i>
-            </button>
+            <div class="logo">Logo</div>
+            <input type="checkbox" id="toggle" style="display: none">
+            <label for="toggle" class="burger">&#9776;</label>
             <nav>
-                <ul>
-                    <li><a href="#">Home</a></li>
+                <ul class="nav-links">
+                    <li><a href="{{URL::to('/')}}">Home</a></li>
                     <li><a href="#">About</a></li>
-                    <li class="services"><a href="#">Services</a>
+                    <li class="has-submenu">
+                        <a href="#">Services</a>
                         <ul class="submenu">
                             <li><a href="#">Service 1</a></li>
                             <li><a href="#">Service 2</a></li>
@@ -42,40 +62,17 @@
                 </ul>
             </nav>
             <div class="search-box">
-                <input type="text" placeholder="Search...">
-                <button type="submit">Search</button>
+                <input type="text" class="search-txt" placeholder="Tìm kiếm">
+                <button class="search-btn">
+                    <i class="bx bx-search"></i>
+                </button>
             </div>
         </div>
        
     </header>
     
     <main>
-        <div class="container-layout">
-            <div class="left-column">
-                <div class="brand-product-selection">
-                    <div class="brand-selection">
-                        <h2>Thương hiệu</h2>
-                        <ul>
-                            <li><a href="#">Thương hiệu 1</a></li>
-                            <li><a href="#">Thương hiệu 2</a></li>
-                            <li><a href="#">Thương hiệu 3</a></li>
-                        </ul>
-                    </div>
-                    <div class="product-type-selection">
-                        <h2>Loại sản phẩm</h2>
-                        <ul>
-                            <li><a href="#">Loại sản phẩm 1</a></li>
-                            <li><a href="#">Loại sản phẩm 2</a></li>
-                            <li><a href="#">Loại sản phẩm 3</a></li>
-                        </ul>
-                    </div>
-                </div>
-               
-            </div>
-                <div class="right-column">
                     @yield('content')
-                </div>
-        </div>
     </main>
 
 
@@ -107,7 +104,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            &copy; 2024 YourWebsite.com | Designed by You
+            &copy; 2024 mkgamedisc.com | Designed by MyKhung
         </div>
     </footer>
     <script src="{{asset('public/fontend/js/jstuviet.js')}}"></script>

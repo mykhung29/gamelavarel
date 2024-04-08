@@ -12,6 +12,7 @@
           }
         ?>
       </span>
+      <a href="{{URL::to('/add-category-product')}}" class="btn btn-primary" style="margin-bottom: 10px; ">Thêm danh mục</a>
 <table>
     <thead>
         <tr>

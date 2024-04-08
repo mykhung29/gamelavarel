@@ -1,6 +1,6 @@
 /* styles.css */
 
-.container {
+.container_home {
     display: grid;
     grid-template-columns: repeat(
         4,
@@ -9,7 +9,12 @@
     gap: 20px;
     padding: 20px;
 }
-
+.container_home a {
+    text-decoration: none;
+}
+.container_home p {
+    margin: 0;
+}
 .product-card {
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -55,7 +60,7 @@
     background-color: #0056b3;
 }
 @media only screen and (max-width: 767px) {
-    .container {
+    .container_home {
         grid-template-columns: repeat(
             2,
             1fr
@@ -67,4 +72,24 @@
         height: auto;
         border-radius: 5px;
     }
+}
+.page-number {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.page-number a {
+    text-decoration: none;
+    color: black;
+    margin: 0 5px;
+}
+.page-number span {
+    color: #007bff;
+    margin: 0 5px;
+}
+.empty-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 80px;
 }
