@@ -1,0 +1,31 @@
+.cart {
+    width: 500px;
+    margin: 20px auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.cart h2 {
+    margin-top: 0;
+}
+
+.cart-items {
+    width: 100%;
+}
+
+.cart-items th,
+.cart-items td {
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+    text-align: left;
+}
+
+.total {
+    margin-top: 10px;
+}
+
+.cart button {
+    display: block;
+    margin-top: 10px;
+}

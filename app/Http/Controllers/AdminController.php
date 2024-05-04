@@ -40,7 +40,8 @@ class AdminController extends Controller
     }
     public function logout()
     {
-        $this->AuthLogin();
+        Session::put('admin_name', null);
+        Session::put('admin_id', null);
         return view('admin_login');
     }
     /**

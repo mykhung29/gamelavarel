@@ -27,15 +27,24 @@
                 <div class="container_home">
 
                     @foreach ($all_product as $all)
+                    <form action="{{URL::to('/add-cart/'.$all->product_id)}}" method="post">
                         <a href="{{URL::to('/moreinfor/'.$all->product_id)}}">
                             <div class="product-card">
                                 <img src="{{ asset('public/img_upload/product/' . $all->product_img) }}" alt="" width="150px">
                                 <h3>{{$all ->product_name}}</h3>
                                 <p>{{$all ->product_type}}</p>
                                 <span>${{$all ->product_price}}</span>
-                                <button>Add to Cart</button>
+                                <button type="submit" name="add_cart" >Add to Cart</button>
                             </div>
                         </a>
+                        <input type="hidden" value="{{$all ->product_name}}" name="name">
+                        <input type="hidden" value="{{$all ->product_price}}" name="price">
+                        <input type="hidden" value="{{$all ->product_img}}" name="img">
+                        <input type="hidden" value="{{$all ->product_id}}" name="id">
+                        {{ csrf_field() }}
+
+                    </form>
+                        
                     @endforeach
 
                   

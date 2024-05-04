@@ -9,31 +9,20 @@ use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
         return view('pages.register');
     }
-    public function add_to_cart(){
-        $data = array();
-        $data['id'] = $_POST['id'];
-        $data['name'] = $_POST['name'];
-        $data['price'] = $_POST['price'];
-        $data['quantity'] = $_POST['quantity'];
-        $data['image'] = $_POST['image'];
-        $data['total'] = $data['price'] * $data['quantity'];
-        $data['user_id'] = Session::get('id');
-        $data['created_at'] = date('Y-m-d H:i:s');
-        DB::table('cart')->insert($data);
-        return Redirect::to('/');
-
+    public function AuthLogin()
+    {
+        $user_id = Session::get('id');
+        if ($user_id) {
+            return Redirect::to('/add-cart/{product_id}');
+        } else {
+            return Redirect::to('/login')->send();
+        }
     }
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create(Request $request)
     {
         $data['name'] = $request->name;
@@ -47,13 +36,11 @@ class UserController extends Controller
             Session::put('message', 'Tên tài khoản đã tồn tại !!!');
             return Redirect::to('/register');
         }
-
         // Check if password confirmation matches
         if ($request->password !== $request->password_confirmation) {
             Session::put('message', 'Xác nhận mật khẩu không đúng !!!');
             return Redirect::to('/register');
         }
-
         DB::table('users')->insert($data);
         return view('pages.login');
     }
@@ -72,6 +59,59 @@ class UserController extends Controller
             return Redirect::to('/register');
         }
     }
+    public function logout()
+    {
+        Session::put('name', null);
+        Session::put('id', null);
+        return Redirect::to('/');
+    }
+
+    public function add_to_cart()
+    {
+        $this->AuthLogin();
+        $product_id = $_POST['id'];
+        $user_id = Session::get('id');
+        $cart = DB::table('carts')->where('product_id', $product_id)->where('user_id', $user_id)->first();
+
+        if ($cart) {
+            // If the product exists in the cart, increment the quantity
+            DB::table('carts')->where('product_id', $product_id)->where('user_id', $user_id)->increment('quantity');
+        } else {
+            // If the product does not exist in the cart, add it
+            $data = array();
+            $data['product_id'] = $product_id;
+            $data['product_name'] = $_POST['name'];
+            $data['product_price'] = $_POST['price'];
+            $data['quantity'] = 1;
+            $data['image'] = $_POST['img'];
+            $data['user_id'] = $user_id;
+            $data['created_at'] = date('Y-m-d H:i:s');
+            DB::table('carts')->insert($data);
+        }
+
+        return Redirect::to('/show_cart');
+    }
+
+    public function cart()
+    {
+        $this->AuthLogin();
+        $user_id = Session::get('id');
+        $cart = DB::table('carts')->where('user_id', $user_id)->get();
+
+        $total = 0;
+        foreach ($cart as $item) {
+            $total += $item->product_price * $item->quantity;
+        }
+
+        return view('pages.cart', ['cart' => $cart, 'total' => $total]);
+    }
+
+
+
+
+
+
+
 
 
     /**

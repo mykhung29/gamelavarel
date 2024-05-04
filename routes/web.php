@@ -56,6 +56,9 @@ Route::get('/delete-type/{id}', [GameCategoryController::class, 'delete']);
 Route::get('/register', [UserController::class, 'index']);
 Route::post('/create', [UserController::class, 'create']);
 Route::post('/login-check', [UserController::class, 'login']);
+Route::get('/logout_user', [UserController::class, 'logout']);
+Route::post('/add-cart/{product_id}', [UserController::class, 'add_to_cart']);
+Route::get('/show_cart', [UserController::class, 'cart']);
 
 // // san pham
 

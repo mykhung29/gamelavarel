@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{asset('public/fontend/css/home.css')}}">
     <link rel="stylesheet" href="{{asset('public/fontend/css/product_detail.css')}}">
     <link rel="stylesheet" href="{{asset('public/fontend/css/login.css')}}">
+    <link rel="stylesheet" href="{{asset('public/fontend/css/cart.css')}}">
 
     
 </head>
@@ -37,9 +38,16 @@
             @endif
 
 
-            <a href="http://" target="_blank" rel="noopener noreferrer">
+            <a href="{{URL::to('/show_cart')}}" target="_blank" rel="noopener noreferrer">
                 <i class='bx bx-cart-alt'>Giỏ hàng()</i>
             </a>
+            @if(Session::has('name'))
+                <a href="{{URL::to('/logout_user')}}"  rel="noopener noreferrer">
+                    <i class='bx bx-user'>Đăng xuất</i>
+                </a>
+                
+            @endif
+           
             
         </div>
         <div class="big-div">
