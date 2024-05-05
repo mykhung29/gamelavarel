@@ -97,17 +97,53 @@ class UserController extends Controller
         $this->AuthLogin();
         $user_id = Session::get('id');
         $cart = DB::table('carts')->where('user_id', $user_id)->get();
+        $order_place = DB::table('orders')->where('id_user', $user_id)->get();
 
         $total = 0;
         foreach ($cart as $item) {
             $total += $item->product_price * $item->quantity;
         }
 
-        return view('pages.cart', ['cart' => $cart, 'total' => $total]);
+        return view('pages.cart', ['cart' => $cart, 'total' => $total, 'order_place' => $order_place]);
     }
 
+    public function delete_to_cart($id)
+    {
+        $this->AuthLogin();
+        DB::table('carts')->where('id', $id)->delete();
+        // Session::put('message', 'Đã xóa');
+        return Redirect::to('/show_cart');
+    }
+    public function checkout_cart()
+    {
+        // $this->AuthLogin();
+        return view('pages.checkout');
 
 
+    }
+
+    public function edit_info()
+    {
+        $this->AuthLogin();
+        return view('pages.place');
+    }
+
+    public function add_place_ship(Request $request)
+    {
+        $this->AuthLogin();
+        $data = array();
+        $data['name'] = $request->name;
+        $data['phone'] = $request->phone;
+        $data['address'] = $request->address;
+        $data['email'] = $request->email;
+        $data['note'] = $request->note;
+        $data['id_user'] = Session::get('id');
+        $data['created_at'] = date('Y-m-d H:i:s');
+
+        DB::table('orders')->insert($data);
+
+        return Redirect::to('/');
+    }
 
 
 
@@ -120,6 +156,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //
+
     }
 
     /**

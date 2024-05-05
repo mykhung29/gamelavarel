@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{asset('public/fontend/css/product_detail.css')}}">
     <link rel="stylesheet" href="{{asset('public/fontend/css/login.css')}}">
     <link rel="stylesheet" href="{{asset('public/fontend/css/cart.css')}}">
+    {{-- <link rel="stylesheet" href="{{asset('public/fontend/css/checkout.css')}}"> --}}
 
     
 </head>
@@ -28,7 +29,7 @@
                 </i>
             </a> --}}
             @if(Session::has('name'))
-                <a href="{{URL::to('/logout')}}"  rel="noopener noreferrer">
+                <a href="{{URL::to('/edit_info')}}"  rel="noopener noreferrer">
                     <i class='bx bx-user'>Chào, {{ Session::get('name') }}</i>
                 </a>
             @else

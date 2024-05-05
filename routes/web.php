@@ -59,6 +59,11 @@ Route::post('/login-check', [UserController::class, 'login']);
 Route::get('/logout_user', [UserController::class, 'logout']);
 Route::post('/add-cart/{product_id}', [UserController::class, 'add_to_cart']);
 Route::get('/show_cart', [UserController::class, 'cart']);
+Route::get('/delete-product-cart/{id}', [UserController::class, 'delete_to_cart']);
+Route::get('/checkout', [UserController::class, 'checkout_cart']);
+Route::get('/edit_info', [UserController::class, 'edit_info']);
+Route::post('/add-place-ship', [UserController::class, 'add_place_ship']);
+
 
 // // san pham
 
