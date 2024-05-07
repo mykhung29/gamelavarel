@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
+use App\Models\Order;
+use App\Models\OrderDetail;
 
 class UserController extends Controller
 {
@@ -114,13 +116,9 @@ class UserController extends Controller
         // Session::put('message', 'Đã xóa');
         return Redirect::to('/show_cart');
     }
-    public function checkout_cart()
-    {
-        // $this->AuthLogin();
-        return view('pages.checkout');
 
 
-    }
+
 
     public function edit_info()
     {
@@ -145,7 +143,33 @@ class UserController extends Controller
         return Redirect::to('/');
     }
 
+    public function checkout(Request $request)
+    {
+        $this->AuthLogin();
+        $user_id = Session::get('id');
+        $place_id = $request->address; // Get the selected place_id from the form
+        $cart = DB::table('carts')->where('user_id', $user_id)->get();
+        $last_order_id = DB::table('order_details')->max('id_order');
+        $new_order_id = $last_order_id ? $last_order_id + 1 : 1;
+        foreach ($cart as $item) {
+            DB::table('order_details')->insert([
+                'id_order' => $new_order_id,
+                'user_id' => $user_id,
+                'place_id' => $place_id,
+                'product_id' => $item->product_id,
+                'product_name' => $item->product_name,
+                'image' => $item->image,
+                'quantity' => $item->quantity,
+                'price' => $item->product_price,
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+        }
 
+        DB::table('carts')->where('user_id', $user_id)->delete();
+
+        return view('pages.checkout_success');
+    }
 
 
 

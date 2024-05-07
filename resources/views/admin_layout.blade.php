@@ -28,7 +28,7 @@
               <a class="title" href="{{URL::to('/show-product')}}">Quản lí sản phẩm</a>
           </li>
         <li class="dropdown">
-          <a class="title" href="#">Quản lí đơn hàng</a>
+          <a class="title" href="{{URL::to('/show-orders')}}">Quản lí đơn hàng</a>
       </li>
       <li class="dropdown">
         <a class="title" href="{{URL::to('/show-user')}}">Quản lí tài khoản</a>

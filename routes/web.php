@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GameCategoryController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use App\Http\Middleware\CheckAdmin;
@@ -49,7 +50,9 @@ Route::get('/add-type', [GameCategoryController::class, 'create']);
 Route::get('/show-type', [GameCategoryController::class, 'index']);
 Route::post('/save-type', [GameCategoryController::class, 'store']);
 Route::get('/delete-type/{id}', [GameCategoryController::class, 'delete']);
-
+//orders
+Route::get('/show-orders', [OrderController::class, 'showOrders']);
+Route::get('/show-order-detail/{id_order}/{user_id}/{place_id}', [OrderController::class, 'showOrderDetail']);
 
 // // user
 
@@ -60,7 +63,7 @@ Route::get('/logout_user', [UserController::class, 'logout']);
 Route::post('/add-cart/{product_id}', [UserController::class, 'add_to_cart']);
 Route::get('/show_cart', [UserController::class, 'cart']);
 Route::get('/delete-product-cart/{id}', [UserController::class, 'delete_to_cart']);
-Route::get('/checkout', [UserController::class, 'checkout_cart']);
+Route::post('/checkout', [UserController::class, 'checkout']);
 Route::get('/edit_info', [UserController::class, 'edit_info']);
 Route::post('/add-place-ship', [UserController::class, 'add_place_ship']);
 
