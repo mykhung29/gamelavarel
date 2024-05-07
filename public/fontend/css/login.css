@@ -50,3 +50,17 @@
     text-decoration: none;
     color: black;
 }
+.hidden-pass {
+    position: relative;
+}
+.hidden-pass i {
+    position: absolute;
+    right: 10px;
+    top: 42%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.container-register .hidden-pass i {
+    top: 56%;
+}

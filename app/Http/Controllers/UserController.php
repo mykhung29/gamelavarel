@@ -105,7 +105,6 @@ class UserController extends Controller
         foreach ($cart as $item) {
             $total += $item->product_price * $item->quantity;
         }
-
         return view('pages.cart', ['cart' => $cart, 'total' => $total, 'order_place' => $order_place]);
     }
 
@@ -113,17 +112,27 @@ class UserController extends Controller
     {
         $this->AuthLogin();
         DB::table('carts')->where('id', $id)->delete();
-        // Session::put('message', 'Đã xóa');
         return Redirect::to('/show_cart');
     }
-
-
+    public function delete_place($id)
+    {
+        $this->AuthLogin();
+        DB::table('orders')->where('id', $id)->delete();
+        return Redirect::to('/edit_place');
+    }
 
 
     public function edit_info()
     {
         $this->AuthLogin();
-        return view('pages.place');
+        return view('pages.edit_info');
+    }
+    public function edit_place()
+    {
+        $this->AuthLogin();
+        $user_id = Session::get('id');
+        $order_place = DB::table('orders')->where('id_user', $user_id)->get();
+        return view('pages.place', ['order_place' => $order_place]);
     }
 
     public function add_place_ship(Request $request)
@@ -146,8 +155,9 @@ class UserController extends Controller
     public function checkout(Request $request)
     {
         $this->AuthLogin();
+        $action = $request->input('action');
         $user_id = Session::get('id');
-        $place_id = $request->address; // Get the selected place_id from the form
+        $place_id = $request->address;
         $cart = DB::table('carts')->where('user_id', $user_id)->get();
         $last_order_id = DB::table('order_details')->max('id_order');
         $new_order_id = $last_order_id ? $last_order_id + 1 : 1;
@@ -164,6 +174,8 @@ class UserController extends Controller
                 'created_at' => now(),
                 'updated_at' => now()
             ]);
+
+
         }
 
         DB::table('carts')->where('user_id', $user_id)->delete();

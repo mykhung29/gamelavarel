@@ -14,7 +14,38 @@ class OrderController extends Controller
         $all_orders = DB::table('order_details')
             ->select('id_order', 'user_id', 'place_id', DB::raw('GROUP_CONCAT(product_id) as product_ids'))
             ->groupBy('id_order', 'user_id', 'place_id')
-            ->get();
+            ->paginate(3);
+
+
+
+        return view('admin.show_orders', ['all_orders' => $all_orders]);
+    }
+    public function sort(Request $request)
+    {
+        $sort = $request->input('sort');
+
+        switch ($sort) {
+            case 'id_order_asc':
+                $all_orders = DB::table('order_details')
+                    ->select('id_order', 'user_id', 'place_id', DB::raw('GROUP_CONCAT(product_id) as product_ids'))
+                    ->groupBy('id_order', 'user_id', 'place_id')
+                    ->orderBy('id_order', 'asc')
+                    ->paginate(3);
+                break;
+            case 'id_order_desc':
+                $all_orders = DB::table('order_details')
+                    ->select('id_order', 'user_id', 'place_id', DB::raw('GROUP_CONCAT(product_id) as product_ids'))
+                    ->groupBy('id_order', 'user_id', 'place_id')
+                    ->orderBy('id_order', 'desc')
+                    ->paginate(3);
+                break;
+            default:
+                $all_orders = DB::table('order_details')
+                    ->select('id_order', 'user_id', 'place_id', DB::raw('GROUP_CONCAT(product_id) as product_ids'))
+                    ->groupBy('id_order', 'user_id', 'place_id')
+                    ->paginate(3);
+                break;
+        }
 
         return view('admin.show_orders', ['all_orders' => $all_orders]);
     }
@@ -32,7 +63,14 @@ class OrderController extends Controller
             ->where('user_id', $id_user)
             ->get();
 
-        return view('admin.details_order', ['order_detail' => $order_details, 'info' => $info]);
+        $total = DB::table('order_details')
+            ->where('id_order', $id_order)
+            ->where('user_id', $id_user)
+            ->sum(DB::raw('price * quantity'));
+
+
+
+        return view('admin.details_order', ['order_detail' => $order_details, 'info' => $info, 'total' => $total]);
     }
 
 }

@@ -9,7 +9,7 @@
                 <input id="name" type="text" name="name"  required autofocus>
             </div>
 
-            <div>
+            <div >
                 <label for="phone">Phone</label>
                 <input id="phone" type="text" name="phone"  required autofocus>
             </div>
@@ -19,14 +19,16 @@
                 <input id="email" type="email" name="email"  required>
             </div>
 
-            <div>
+            <div class="hidden-pass">
                 <label for="password">Password</label>
-                <input id="password" type="password" name="password" required>
+                <input id="password-input" type="password" name="password" required>
+                <i id="toggle-password" class='bx bx-hide' ></i>
             </div>
 
-            <div>
+            <div class="hidden-pass">
                 <label for="password_confirmation">Confirm Password</label>
-                <input id="password_confirmation" type="password" name="password_confirmation" required>
+                <input id="password-input" type="password" name="password_confirmation" required>
+                <i id="toggle-password" class='bx bx-hide' ></i>
             </div>
 
             <div>
@@ -42,5 +44,15 @@
           }
         ?>
       </span>
-</div>
+    </div>
+    <script>
+        document.getElementById('toggle-password').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password-input');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+            } else {
+                passwordInput.type = 'password';
+            }
+        });
+    </script>
 @endsection    

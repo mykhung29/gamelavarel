@@ -6,11 +6,11 @@
         <table class="cart-items">
             <thead>
                 <tr>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Image</th>
-                <th>Edit</th>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Image</th>
+                    <th>Edit</th>
                 </tr>
             </thead>
             <tbody>
@@ -21,21 +21,22 @@
                             <td>{{$product ->product_name}}</td>
                             <td>${{$product ->product_price}}</td>
                             <td>
-                                <input type="number"  min="1" max="100" value="{{$product ->quantity}}" />
-                                
+                                <input type="number" name="quantity" min="1" max="100" value="{{$product->quantity}}" />
                             </td>
                             <td>
                                 <img src="{{ asset('public/img_upload/product/' .$product ->image) }}" alt="" width="80px">
                             </td>
                             <td>
-                                <button><a href="{{URL::to('/delete-product-cart/'.$product->id)}}"  rel="noopener noreferrer">Xóa</a></button>
+                                <button><a href="{{URL::to('/delete-product-cart/'.$product->id)}}"  rel="noopener noreferrer">Delete</a></button>
                             </td>
                         </tr>
                     @endforeach
             </tbody>
         </table>
         <div class="total"> Total: ${{ $total }} 
-            <button type="submit" >Checkout</button>
+            <button type="submit" name="checkout">Checkout</button>
+            <button type="submit" name="update">Update</button>
+
         </div>
     </div>
                 <div class="container-checkout">
@@ -46,7 +47,6 @@
                             <label for="address1">{{$place ->name}}<br>{{$place ->phone}}<br>{{$place ->address}}</label><br>
                         </div>
                 @endforeach
-                
                 </div>
                 
             </form>

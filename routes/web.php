@@ -53,6 +53,7 @@ Route::get('/delete-type/{id}', [GameCategoryController::class, 'delete']);
 //orders
 Route::get('/show-orders', [OrderController::class, 'showOrders']);
 Route::get('/show-order-detail/{id_order}/{user_id}/{place_id}', [OrderController::class, 'showOrderDetail']);
+Route::get('/sort', [OrderController::class, 'sort']);
 
 // // user
 
@@ -65,7 +66,10 @@ Route::get('/show_cart', [UserController::class, 'cart']);
 Route::get('/delete-product-cart/{id}', [UserController::class, 'delete_to_cart']);
 Route::post('/checkout', [UserController::class, 'checkout']);
 Route::get('/edit_info', [UserController::class, 'edit_info']);
+Route::get('/edit_place', [UserController::class, 'edit_place']);
 Route::post('/add-place-ship', [UserController::class, 'add_place_ship']);
+Route::get('/delete_place/{id}', [UserController::class, 'delete_place']);
+
 
 
 // // san pham

@@ -18,16 +18,7 @@
    
     <header>
         <div class="mini-div">
-            {{-- <a href="{{URL::to('/login')}}"  rel="noopener noreferrer">
-               
-                <i class='bx bx-user'>
-                    @if(Session::has('name'))
-                        Chào, {{ Session::get('name') }}
-                    @else
-                        Đăng nhập
-                    @endif
-                </i>
-            </a> --}}
+           
             @if(Session::has('name'))
                 <a href="{{URL::to('/edit_info')}}"  rel="noopener noreferrer">
                     <i class='bx bx-user'>Chào, {{ Session::get('name') }}</i>

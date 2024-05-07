@@ -37,6 +37,7 @@
     border: 1px solid #ccc;
     padding: 5px 10px;
     margin-bottom: 15px;
+    flex-direction: column;
 }
 .cart button {
     display: block;
@@ -128,4 +129,22 @@
 .container-success a:hover {
     background-color: #0056b3;
 }
-
+.place-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+.add-show {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    align-items: start;
+}
+.place-ship i {
+    margin-left: 300px;
+}
+.place-ship a {
+    color: black;
+}

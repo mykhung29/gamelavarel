@@ -15,7 +15,11 @@
             @csrf
             <h2>Đăng nhập</h2>
             <input type="text" name="email" placeholder="Email">
-            <input type="password" name="password" placeholder="Mật khẩu">
+            <div class="hidden-pass">
+                <input id="password-input" type="password" name="password" placeholder="Mật khẩu">
+                <i id="toggle-password" class='bx bx-hide' ></i>
+            </div>
+          
             <div class="remember-password">
                 <input type="checkbox" name="remember" id="remember">
                 <label for="remember">Nhớ mật khẩu</label>
@@ -33,4 +37,14 @@
         </div>
        
     </div>
+    <script>
+        document.getElementById('toggle-password').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password-input');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+            } else {
+                passwordInput.type = 'password';
+            }
+        });
+    </script>
 @endsection    

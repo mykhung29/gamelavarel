@@ -121,3 +121,62 @@
 .container-order ul li {
     list-style-type: none;
 }
+.container-order-detail {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+.container-order-detail h1 {
+    text-align: center;
+}
+
+.container-order-detail .order-details {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.container-order-detail .order-info {
+    margin-bottom: 20px;
+}
+
+.container-order-detail .order-info p {
+    margin: 5px 0;
+}
+
+.container-order-detail .products {
+    margin-top: 20px;
+}
+
+.container-order-detail .product {
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+    display: flex;
+}
+
+.container-order-detail .product img {
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+}
+
+.container-order-detail .product p {
+    margin: 5px 0;
+}
+
+.container-order-detail .product-name {
+    font-weight: bold;
+}
+
+.container-order-detail .product-quantity,
+.container-order-detail .product-price {
+    font-style: italic;
+}
+.product-info {
+    display: flex;
+    flex-direction: column;
+}
+.container-orders form {
+    margin-bottom: 10px;
+}
