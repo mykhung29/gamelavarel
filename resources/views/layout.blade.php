@@ -20,7 +20,7 @@
         <div class="mini-div">
            
             @if(Session::has('name'))
-                <a href="{{URL::to('/edit_info')}}"  rel="noopener noreferrer">
+                <a href="{{URL::to('/show_info')}}"  rel="noopener noreferrer">
                     <i class='bx bx-user'>Chào, {{ Session::get('name') }}</i>
                 </a>
             @else

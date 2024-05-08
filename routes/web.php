@@ -16,14 +16,11 @@ use Illuminate\Support\Facades\Route;
 //home
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/category/{category_name}', [HomeController::class, 'category']);
-
-
 // // admin
 Route::get('/admin', [AdminController::class, 'login']);
 Route::get('/dashbroad', [AdminController::class, 'index']);
 Route::post('/admin-dashbroad', [AdminController::class, 'login_check']);
 Route::get('/logout', [AdminController::class, 'logout']);
-
 // // category product
 Route::get('/add-category-product', [CategoryController::class, 'addCategoryProduct']);
 Route::get('/show-category-product', [CategoryController::class, 'showCategoryProduct']);
@@ -33,7 +30,6 @@ Route::get('/unactive-category-product/{category_id}', [CategoryController::clas
 Route::get('/delete-category-product/{category_id}', [CategoryController::class, 'deleteCategoryProduct']);
 Route::get('/edit-category-product/{category_id}', [CategoryController::class, 'editCategoryProduct']);
 Route::post('/update-category-product/{category_id}', [CategoryController::class, 'updateCategoryProduct']);
-
 // // product
 Route::get('/add-product', [ProductController::class, 'addProduct']);
 Route::get('/show-product', [ProductController::class, 'showProduct']);
@@ -56,24 +52,24 @@ Route::get('/show-order-detail/{id_order}/{user_id}/{place_id}', [OrderControlle
 Route::get('/sort', [OrderController::class, 'sort']);
 
 // // user
-
 Route::get('/register', [UserController::class, 'index']);
 Route::post('/create', [UserController::class, 'create']);
 Route::post('/login-check', [UserController::class, 'login']);
 Route::get('/logout_user', [UserController::class, 'logout']);
+Route::get('/login', [HomeController::class, 'login']);
+// // cart
 Route::post('/add-cart/{product_id}', [UserController::class, 'add_to_cart']);
 Route::get('/show_cart', [UserController::class, 'cart']);
 Route::get('/delete-product-cart/{id}', [UserController::class, 'delete_to_cart']);
 Route::post('/checkout', [UserController::class, 'checkout']);
-Route::get('/edit_info', [UserController::class, 'edit_info']);
+//edit info, place
+Route::get('/show_info', [UserController::class, 'show_info']);
 Route::get('/edit_place', [UserController::class, 'edit_place']);
 Route::post('/add-place-ship', [UserController::class, 'add_place_ship']);
 Route::get('/delete_place/{id}', [UserController::class, 'delete_place']);
-
-
+Route::post('/edit_info', [UserController::class, 'edit_info']);
 
 // // san pham
-
 Route::get('/moreinfor/{product_id}', [HomeController::class, 'detail']);
-Route::get('/login', [HomeController::class, 'login']);
+
 

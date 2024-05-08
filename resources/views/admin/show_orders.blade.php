@@ -16,6 +16,7 @@
                 <th>ID Đơn hàng</th>
                 <th>ID Khách</th>
                 <th>ID Điểm giao</th>
+                <th>Status</th>
                 <th>ID Sản phẩm</th>
             </tr>
             </thead>
@@ -25,6 +26,9 @@
                 <td>{{$order->id_order}}</td>
                 <td>{{$order->user_id}}</td>
                 <td>{{$order->place_id}}</td>
+                <td>{{$order->status_text}}</td>
+
+                
                 <td>
                         <ul>
                             @foreach(explode(',', $order->product_ids) as $product_id)

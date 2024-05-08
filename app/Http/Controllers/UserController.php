@@ -122,10 +122,11 @@ class UserController extends Controller
     }
 
 
-    public function edit_info()
+    public function show_info()
     {
         $this->AuthLogin();
-        return view('pages.edit_info');
+        $info = DB::table('users')->where('id', Session::get('id'))->first();
+        return view('pages.edit_info', ['info' => $info]);
     }
     public function edit_place()
     {
@@ -133,6 +134,19 @@ class UserController extends Controller
         $user_id = Session::get('id');
         $order_place = DB::table('orders')->where('id_user', $user_id)->get();
         return view('pages.place', ['order_place' => $order_place]);
+    }
+    public function edit_info(Request $request)
+    {
+        $this->AuthLogin();
+        $data = array();
+        $data['name'] = $request->name;
+        $data['phone'] = $request->phone;
+        $data['email'] = $request->email;
+        $data['updated_at'] = date('Y-m-d H:i:s');
+
+        DB::table('users')->where('id', Session::get('id'))->update($data);
+
+        return Redirect::to('/show_info');
     }
 
     public function add_place_ship(Request $request)
@@ -155,17 +169,18 @@ class UserController extends Controller
     public function checkout(Request $request)
     {
         $this->AuthLogin();
-        $action = $request->input('action');
         $user_id = Session::get('id');
         $place_id = $request->address;
         $cart = DB::table('carts')->where('user_id', $user_id)->get();
         $last_order_id = DB::table('order_details')->max('id_order');
         $new_order_id = $last_order_id ? $last_order_id + 1 : 1;
+        $status = 0;
         foreach ($cart as $item) {
             DB::table('order_details')->insert([
                 'id_order' => $new_order_id,
                 'user_id' => $user_id,
                 'place_id' => $place_id,
+                'status' => $status,
                 'product_id' => $item->product_id,
                 'product_name' => $item->product_name,
                 'image' => $item->image,
