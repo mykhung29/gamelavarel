@@ -198,47 +198,26 @@ class UserController extends Controller
         return view('pages.checkout_success');
     }
 
-
-
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function show_order()
     {
-        //
+        $this->AuthLogin();
+        $user_id = Session::get('id');
+        $all_orders = DB::table('order_details')
+            ->join('order_statuses', 'order_details.status', '=', 'order_statuses.status_code')
+            ->join('tbl_product', 'order_details.product_id', '=', 'tbl_product.product_id')
+            ->join('orders', 'order_details.place_id', '=', 'orders.id')
+            ->select('order_details.id_order', 'order_details.user_id', 'order_details.place_id', 'order_statuses.status_text', DB::raw('GROUP_CONCAT(tbl_product.product_name) as product_names'), DB::raw('SUM(order_details.quantity * tbl_product.product_price) as total_price'), 'orders.address')
+            ->where('order_details.user_id', $user_id)
+            ->groupBy('order_details.id_order', 'order_details.user_id', 'order_details.place_id', 'order_statuses.status_text', 'orders.address')
+            ->paginate(3);
 
+
+
+
+        return view('pages.show_order', ['orders' => $all_orders]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

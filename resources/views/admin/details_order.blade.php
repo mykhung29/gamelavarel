@@ -19,14 +19,16 @@
             @foreach($current_status as $status)
                 <p><strong>Status:</strong> <span id="order-status">{{ $status->status_text }}</span></p>
             @endforeach
-            <form action="" method="get">
-                <select name="sort" onchange="this.form.submit()">
+
+            <form action="{{URL::to('/update_status/'.$id_order)}}" method="post">
+                {{ csrf_field() }}
+                <select name="update_status" onchange="this.form.submit()">
                     @foreach($status_order as $status)
                         <option value="{{$status->status_code}}">{{$status->status_text}}</option>
                     @endforeach
-                    
                 </select>
             </form>
+
             @foreach($order_detail as $detail)
                 <div class="product">
                     <img src="{{ asset('public/img_upload/product/' .$detail->image) }}" alt="" width="150px">

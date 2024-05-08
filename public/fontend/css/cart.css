@@ -148,3 +148,93 @@
 .place-ship a {
     color: black;
 }
+.edit-info-container .user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.edit-info-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.edit-info-container .avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.edit-info-container .name {
+    margin: 0;
+    font-size: 24px;
+}
+
+.edit-info-container .phone,
+.edit-info-container .email {
+    margin: 5px 0;
+    font-size: 18px;
+}
+
+.edit-info-container .update-form {
+    margin-top: 20px;
+}
+
+.edit-info-container label {
+    font-weight: bold;
+}
+
+.edit-info-container input[type="text"],
+.edit-info-container input[type="tel"],
+.edit-info-container input[type="email"] {
+    width: 250px;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.edit-info-container input[type="submit"] {
+    background-color: grey;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.edit-info-container input[type="submit"]:hover {
+    background-color: gray;
+}
+.edit-info-container .control {
+    margin-bottom: 20px;
+}
+.show-order-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.show-order-container .order {
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.show-order-container .order-details {
+    padding-left: 20px;
+}
+
+.show-order-container .order-details h2 {
+    margin-top: 0;
+}
+
+.show-order-container .order-details p {
+    margin: 5px 0;
+}
+.show-order-container h3,
+.show-order-container h2 {
+    margin: 0;
+}

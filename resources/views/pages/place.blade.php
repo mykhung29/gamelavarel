@@ -6,6 +6,7 @@
     <div class="control">
       <a href="{{ URL::to('/show_info') }}" class="btn btn-primary">Infomation</a>
       <a href="{{ URL::to('/edit_place') }}" class="btn btn-primary">Address</a>
+      <a href="{{ URL::to('/show_order') }}" class="btn btn-primary">My orders</a>
     </div>  
 
     <div class="add-show">

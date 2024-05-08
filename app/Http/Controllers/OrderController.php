@@ -13,7 +13,8 @@ class OrderController extends Controller
     {
         $all_orders = DB::table('order_details')
             ->join('order_statuses', 'order_details.status', '=', 'order_statuses.status_code')
-            ->select('order_details.id_order', 'order_details.user_id', 'order_details.place_id', 'order_statuses.status_text', DB::raw('GROUP_CONCAT(order_details.product_id) as product_ids'))
+            ->join('tbl_product', 'order_details.product_id', '=', 'tbl_product.product_id')
+            ->select('order_details.id_order', 'order_details.user_id', 'order_details.place_id', 'order_statuses.status_text', DB::raw('GROUP_CONCAT(tbl_product.product_name) as product_names'))
             ->groupBy('order_details.id_order', 'order_details.user_id', 'order_details.place_id', 'order_statuses.status_text')
             ->paginate(3);
 
@@ -73,6 +74,8 @@ class OrderController extends Controller
             ->get();
 
         $current_status = $order_details[0]->status;
+        $id_order = $order_details[0]->id_order;
+
         $current_status_text = DB::table('order_statuses')
             ->where('status_code', $current_status)
             ->get();
@@ -83,8 +86,20 @@ class OrderController extends Controller
             'total' => $total,
             'status_order' => $status_order,
             'current_status' => $current_status_text,
+            'id_order' => $id_order
 
         ]);
+    }
+
+    public function updateStatus(Request $request, $id_order)
+    {
+        $status = $request->input('update_status');
+
+        DB::table('order_details')
+            ->where('id_order', $id_order)
+            ->update(['status' => $status]);
+
+        return redirect('/show-orders');
     }
 
 }

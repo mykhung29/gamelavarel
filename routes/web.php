@@ -50,6 +50,7 @@ Route::get('/delete-type/{id}', [GameCategoryController::class, 'delete']);
 Route::get('/show-orders', [OrderController::class, 'showOrders']);
 Route::get('/show-order-detail/{id_order}/{user_id}/{place_id}', [OrderController::class, 'showOrderDetail']);
 Route::get('/sort', [OrderController::class, 'sort']);
+Route::post('/update_status/{id_order}', [OrderController::class, 'updateStatus']);
 
 // // user
 Route::get('/register', [UserController::class, 'index']);
@@ -62,6 +63,7 @@ Route::post('/add-cart/{product_id}', [UserController::class, 'add_to_cart']);
 Route::get('/show_cart', [UserController::class, 'cart']);
 Route::get('/delete-product-cart/{id}', [UserController::class, 'delete_to_cart']);
 Route::post('/checkout', [UserController::class, 'checkout']);
+Route::get('/show_order', [UserController::class, 'show_order']);
 //edit info, place
 Route::get('/show_info', [UserController::class, 'show_info']);
 Route::get('/edit_place', [UserController::class, 'edit_place']);

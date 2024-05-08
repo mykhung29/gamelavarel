@@ -17,7 +17,7 @@
                 <th>ID Khách</th>
                 <th>ID Điểm giao</th>
                 <th>Status</th>
-                <th>ID Sản phẩm</th>
+                <th>Sản phẩm</th>
             </tr>
             </thead>
             <tbody>
@@ -31,8 +31,8 @@
                 
                 <td>
                         <ul>
-                            @foreach(explode(',', $order->product_ids) as $product_id)
-                                 <li>{{$product_id}}</li>
+                            @foreach(explode(',', $order->product_names) as $product_names)
+                                 <li>{{$product_names}}</li>
                             @endforeach
                         </ul>
                 <a href="{{URL::to('/show-order-detail/'.$order->id_order.'/'.$order->user_id.'/'.$order->place_id)}}">Chi tiết</a>                </td>
