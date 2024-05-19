@@ -14,7 +14,10 @@ class HomeController extends Controller
     public function index()
     {
         //
-        $all_product = DB::table('tbl_product')->where('product_status', '1')->paginate(2);
+        $all_product = DB::table('tbl_product')
+            ->join('tbl_category', 'tbl_product.product_category', '=', 'tbl_category.category_name')
+            ->where('tbl_category.category_status', '1')
+            ->paginate(2);
         $all_category = DB::table('tbl_category')->where('category_status', '1')->get();
         return view('pages.home', ['all_product' => $all_product], ['all_category' => $all_category]);
     }
@@ -29,24 +32,33 @@ class HomeController extends Controller
 
         return view('pages.home', ['all_product' => $all_product], ['all_category' => $all_category]);
     }
+
+    public function show_category()
+    {
+        $all_category = DB::table('tbl_category')->where('category_status', '1')->get();
+        return view('layout', ['all_category' => $all_category]);
+    }
     public function detail($product_id)
     {
+        $all_category = DB::table('tbl_category')->where('category_status', '1')->get();
         $detail_product = DB::table('tbl_product')->where('product_id', $product_id)->get();
-        return view('pages.product_detail', ['detail_product' => $detail_product]);
+        return view('pages.product_detail', ['detail_product' => $detail_product, 'all_category' => $all_category]);
 
     }
     public function login()
     {
-        return view('pages.login');
+        $all_category = DB::table('tbl_category')->where('category_status', '1')->get();
+        return view('pages.login-register.login', ['all_category' => $all_category]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function about()
     {
-        //
+        return view('pages.about');
     }
+
 
     /**
      * Store a newly created resource in storage.

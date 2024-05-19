@@ -23,14 +23,6 @@ class CategoryController extends Controller
         return view('admin.add_category');
     }
 
-    public function showCategoryProduct()
-    {
-        $this->AuthLogin();
-        $all_category = DB::table('tbl_category')->get();
-        $manager_category = view('admin.show_category')->with('all_caterogy', $all_category);
-        return view('admin_layout')->with('admin.show_category', $manager_category);
-    }
-
     public function saveCategoryProduct(Request $request)
     {
         $this->AuthLogin();
@@ -43,6 +35,13 @@ class CategoryController extends Controller
         return Redirect::to('/add-category-product');
     }
 
+    public function showCategoryProduct()
+    {
+        $this->AuthLogin();
+        $all_category = DB::table('tbl_category')->get();
+        $manager_category = view('admin.show_category')->with('all_caterogy', $all_category);
+        return view('admin_layout')->with('admin.show_category', $manager_category);
+    }
     public function activeCategoryProduct($category_id)
     {
         $this->AuthLogin();

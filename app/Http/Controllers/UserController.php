@@ -8,12 +8,14 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
     public function index()
     {
-        return view('pages.register');
+        return view('pages.login-register.register');
     }
     public function AuthLogin()
     {
@@ -29,11 +31,12 @@ class UserController extends Controller
     {
         $data['name'] = $request->name;
         $data['email'] = $request->email;
+        $data['user'] = $request->user;
         $data['password'] = $request->password;
         $data['phone'] = $request->phone;
 
         // Check if email already exists
-        $existingUser = DB::table('users')->where('email', $data['email'])->first();
+        $existingUser = DB::table('users')->where('user', $data['user'])->first();
         if ($existingUser) {
             Session::put('message', 'Tên tài khoản đã tồn tại !!!');
             return Redirect::to('/register');
@@ -44,14 +47,14 @@ class UserController extends Controller
             return Redirect::to('/register');
         }
         DB::table('users')->insert($data);
-        return view('pages.login');
+        return view('pages.login-register.login');
     }
     public function login(Request $request)
     {
-        $email = $request->email;
+        $user = $request->user;
         $password = $request->password;
 
-        $result = DB::table('users')->where('email', $email)->where('password', $password)->first();
+        $result = DB::table('users')->where('user', $user)->where('password', $password)->first();
         if ($result) {
             Session::put('name', $result->name);
             Session::put('id', $result->id);
@@ -68,23 +71,116 @@ class UserController extends Controller
         return Redirect::to('/');
     }
 
+    public function real_email_form(Request $request)
+    {
+        $email = $request->email;
+        $result = DB::table('users')->where('email', $email)->first();
+        if ($result) {
+            $token = Str::random(10);
+            DB::table('users')->where('email', $email)->update(['remember_token' => $token]);
+            $result1 = DB::table('users')->where('email', $email)->first();
+
+            $data = array();
+            $data['email'] = $result1->email;
+            $data['name'] = $result1->name;
+            $data['token'] = $result1->remember_token; // Thêm token vào dữ liệu gửi email
+            Mail::send('pages.email-content.cf_email_content', $data, function ($message) use ($data) {
+                $message->to($data['email'], $data['name'])->subject('Xác thực email');
+            });
+            Session::put('message', 'Mã xác nhận đã được gửi vào email của bạn !!!');
+            return view('pages.email-content.confirm_email');
+        }
+        return view('pages.email-content.confirm_email');
+    }
+
+    public function confirm_email(Request $request)
+    {
+        $token = $request->token;
+        $result = DB::table('users')->where('remember_token', $token)->first();
+        if ($result) {
+            DB::table('users')->where('remember_token', $token)->update(['email_status' => 1]);
+            Session::put('message', 'Xác thực email thành công !!!');
+            return Redirect::to('/show_info');
+        } else {
+            Session::put('message', 'Token không hợp lệ !!!');
+            return Redirect::to('/real_email');
+        }
+    }
+
+    public function forgot_password()
+    {
+        return view('pages.login-register.forgot_pass');
+    }
+
+    public function send_email(Request $request)
+    {
+        $email = $request->email;
+        $result = DB::table('users')->where('email', $email)->where('email_status', '1')->first();
+        if ($result) {
+            $token = Str::random(10);
+            DB::table('users')->where('email', $email)->update(['remember_token' => $token]);
+            $result1 = DB::table('users')->where('email', $email)->first();
+
+            $data = array();
+            $data['email'] = $result1->email;
+            $data['name'] = $result1->name;
+            $data['token'] = $result1->remember_token;
+            Mail::send('pages.email-content.forgotpass', $data, function ($message) use ($data) {
+                $message->to($data['email'], $data['name'])->subject('Lấy lại mật khẩu');
+            });
+            Session::put('message', 'Mã xác nhận đã được gửi vào email của bạn !!!');
+            return view('pages.email-content.confirm_token');
+        } else {
+            Session::put('message', 'Email không tồn tại hoặc chưa xác thực!!!');
+            return Redirect::to('/forgot_pass');
+        }
+    }
+
+    public function check_token(Request $request)
+    {
+        $token = $request->token;
+        $result = DB::table('users')->where('remember_token', $token)->first();
+        if ($result) {
+            return view('pages.user.reset_pass', ['token' => $token]);
+        } else {
+            Session::put('message', 'Token không hợp lệ !!!');
+            return Redirect::to('/check-token');
+        }
+    }
+
+    public function reset_pass(Request $request)
+    {
+        $token = $request->token;
+        $password = $request->password;
+        $confirm_password = $request->confirm_password;
+
+        if ($password !== $confirm_password) {
+            Session::put('message', 'Xác nhận mật khẩu không đúng !!!');
+            return Redirect::to('/check-token/' . $token);
+        } else {
+            DB::table('users')->where('remember_token', $token)->update(['password' => $password]);
+            Session::put('message', 'Đổi mật khẩu thành công !!!');
+            return Redirect::to('/login');
+        }
+    }
+
     public function add_to_cart()
     {
         $this->AuthLogin();
         $product_id = $_POST['id'];
         $user_id = Session::get('id');
         $cart = DB::table('carts')->where('product_id', $product_id)->where('user_id', $user_id)->first();
-
+        $quantity = $_POST['quantity'];
         if ($cart) {
             // If the product exists in the cart, increment the quantity
-            DB::table('carts')->where('product_id', $product_id)->where('user_id', $user_id)->increment('quantity');
+            DB::table('carts')->where('product_id', $product_id)->where('user_id', $user_id)->increment('quantity', $quantity);
         } else {
             // If the product does not exist in the cart, add it
             $data = array();
             $data['product_id'] = $product_id;
             $data['product_name'] = $_POST['name'];
             $data['product_price'] = $_POST['price'];
-            $data['quantity'] = 1;
+            $data['quantity'] = $_POST['quantity'];
             $data['image'] = $_POST['img'];
             $data['user_id'] = $user_id;
             $data['created_at'] = date('Y-m-d H:i:s');
@@ -105,7 +201,7 @@ class UserController extends Controller
         foreach ($cart as $item) {
             $total += $item->product_price * $item->quantity;
         }
-        return view('pages.cart', ['cart' => $cart, 'total' => $total, 'order_place' => $order_place]);
+        return view('pages.cart.cart', ['cart' => $cart, 'total' => $total, 'order_place' => $order_place]);
     }
 
     public function delete_to_cart($id)
@@ -126,14 +222,21 @@ class UserController extends Controller
     {
         $this->AuthLogin();
         $info = DB::table('users')->where('id', Session::get('id'))->first();
-        return view('pages.edit_info', ['info' => $info]);
+
+        if ($info->email_status == 0) {
+            Session::put('message_email', 'Xác thực email');
+        } else {
+            Session::put('message_email', 'Email đã xác thực');
+        }
+
+        return view('pages.user.edit_info', ['info' => $info]);
     }
     public function edit_place()
     {
         $this->AuthLogin();
         $user_id = Session::get('id');
         $order_place = DB::table('orders')->where('id_user', $user_id)->get();
-        return view('pages.place', ['order_place' => $order_place]);
+        return view('pages.user.place', ['order_place' => $order_place]);
     }
     public function edit_info(Request $request)
     {
@@ -147,6 +250,30 @@ class UserController extends Controller
         DB::table('users')->where('id', Session::get('id'))->update($data);
 
         return Redirect::to('/show_info');
+    }
+
+    public function change_pass(Request $request)
+    {
+        $this->AuthLogin();
+        $data = array();
+        $current_pass = $request->current_password;
+        $data['password'] = $request->new_password;
+        $confirm_pass = $request->confirm_password;
+
+        if ($data['password'] !== $confirm_pass) {
+            Session::put('message', 'Xác nhận mật khẩu không đúng !!!');
+            return Redirect::to('/show_info');
+        } else {
+            $user = DB::table('users')->where('id', Session::get('id'))->first();
+            if ($current_pass !== $user->password) {
+                Session::put('message', 'Mật khẩu hiện tại không đúng !!!');
+                return Redirect::to('/show_info');
+            } else {
+                DB::table('users')->where('id', Session::get('id'))->update($data);
+                Session::put('message', 'Đổi mật khẩu thành công !!!');
+                return Redirect::to('/show_info');
+            }
+        }
     }
 
     public function add_place_ship(Request $request)
@@ -195,7 +322,7 @@ class UserController extends Controller
 
         DB::table('carts')->where('user_id', $user_id)->delete();
 
-        return view('pages.checkout_success');
+        return view('pages.cart.checkout_success');
     }
 
     public function show_order()
@@ -211,10 +338,7 @@ class UserController extends Controller
             ->groupBy('order_details.id_order', 'order_details.user_id', 'order_details.place_id', 'order_statuses.status_text', 'orders.address')
             ->paginate(3);
 
-
-
-
-        return view('pages.show_order', ['orders' => $all_orders]);
+        return view('pages.cart.show_order', ['orders' => $all_orders]);
     }
 
 

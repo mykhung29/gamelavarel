@@ -9,18 +9,18 @@ class OrderController extends Controller
 {
     //
 
-    public function showOrders()
-    {
-        $all_orders = DB::table('order_details')
-            ->join('order_statuses', 'order_details.status', '=', 'order_statuses.status_code')
-            ->join('tbl_product', 'order_details.product_id', '=', 'tbl_product.product_id')
-            ->select('order_details.id_order', 'order_details.user_id', 'order_details.place_id', 'order_statuses.status_text', DB::raw('GROUP_CONCAT(tbl_product.product_name) as product_names'))
-            ->groupBy('order_details.id_order', 'order_details.user_id', 'order_details.place_id', 'order_statuses.status_text')
-            ->paginate(3);
+    // public function showOrders()
+    // {
+    //     $all_orders = DB::table('order_details')
+    //         ->join('order_statuses', 'order_details.status', '=', 'order_statuses.status_code')
+    //         ->join('tbl_product', 'order_details.product_id', '=', 'tbl_product.product_id')
+    //         ->select('order_details.id_order', 'order_details.user_id', 'order_details.place_id', 'order_statuses.status_text', DB::raw('GROUP_CONCAT(tbl_product.product_name) as product_names'))
+    //         ->groupBy('order_details.id_order', 'order_details.user_id', 'order_details.place_id', 'order_statuses.status_text')
+    //         ->paginate(3);
 
 
-        return view('admin.show_orders', ['all_orders' => $all_orders]);
-    }
+    //     return view('admin.show_orders', ['all_orders' => $all_orders]);
+    // }
 
     public function sort(Request $request)
     {
@@ -29,23 +29,30 @@ class OrderController extends Controller
         switch ($sort) {
             case 'id_order_asc':
                 $all_orders = DB::table('order_details')
-                    ->select('id_order', 'user_id', 'place_id', 'status', DB::raw('GROUP_CONCAT(product_id) as product_ids'))
-                    ->groupBy('id_order', 'user_id', 'place_id', 'status')
-                    ->orderBy('id_order', 'asc')
-                    ->paginate(3);
+                    ->join('order_statuses', 'order_details.status', '=', 'order_statuses.status_code')
+                    ->join('tbl_product', 'order_details.product_id', '=', 'tbl_product.product_id')
+                    ->select('order_details.id_order', 'order_details.user_id', 'order_details.place_id', 'order_statuses.status_text', DB::raw('GROUP_CONCAT(tbl_product.product_name) as product_names'))
+                    ->groupBy('order_details.id_order', 'order_details.user_id', 'order_details.place_id', 'order_statuses.status_text')
+                    ->orderBy('id_order', 'desc')
+                    ->paginate(2);
                 break;
             case 'id_order_desc':
                 $all_orders = DB::table('order_details')
-                    ->select('id_order', 'user_id', 'place_id', 'status', DB::raw('GROUP_CONCAT(product_id) as product_ids'))
-                    ->groupBy('id_order', 'user_id', 'place_id', 'status')
-                    ->orderBy('id_order', 'desc')
-                    ->paginate(3);
+                    ->join('order_statuses', 'order_details.status', '=', 'order_statuses.status_code')
+                    ->join('tbl_product', 'order_details.product_id', '=', 'tbl_product.product_id')
+                    ->select('order_details.id_order', 'order_details.user_id', 'order_details.place_id', 'order_statuses.status_text', DB::raw('GROUP_CONCAT(tbl_product.product_name) as product_names'))
+                    ->groupBy('order_details.id_order', 'order_details.user_id', 'order_details.place_id', 'order_statuses.status_text')
+                    ->orderBy('id_order', 'asc')
+                    ->paginate(2);
                 break;
             default:
                 $all_orders = DB::table('order_details')
-                    ->select('id_order', 'user_id', 'place_id', 'status', DB::raw('GROUP_CONCAT(product_id) as product_ids'))
-                    ->groupBy('id_order', 'user_id', 'place_id', 'status')
-                    ->paginate(3);
+                    ->join('order_statuses', 'order_details.status', '=', 'order_statuses.status_code')
+                    ->join('tbl_product', 'order_details.product_id', '=', 'tbl_product.product_id')
+                    ->select('order_details.id_order', 'order_details.user_id', 'order_details.place_id', 'order_statuses.status_text', DB::raw('GROUP_CONCAT(tbl_product.product_name) as product_names'))
+                    ->groupBy('order_details.id_order', 'order_details.user_id', 'order_details.place_id', 'order_statuses.status_text')
+                    ->orderBy('id_order', 'asc')
+                    ->paginate(2);
                 break;
         }
 

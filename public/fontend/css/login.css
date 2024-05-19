@@ -7,10 +7,12 @@
     border-radius: 5px;
 }
 
-.container-login h2,
-.container-register h2 {
+.container-login h2 {
     text-align: center;
     margin-bottom: 20px;
+}
+.container-register h2 {
+    margin: 0;
 }
 
 .container-login input[type="text"],

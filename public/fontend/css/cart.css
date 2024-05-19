@@ -158,6 +158,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 .edit-info-container .avatar {
     width: 100px;
@@ -237,4 +238,102 @@
 .show-order-container h3,
 .show-order-container h2 {
     margin: 0;
+}
+.container-checkout a {
+    color: black;
+    margin: 105px;
+    margin-bottom: 10px;
+}
+.container-change-pass {
+    width: 400px;
+    background-color: #fff;
+    padding: 23px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    transform: translateY(30px);
+}
+
+.container-change-pass h2 {
+    margin-bottom: 20px;
+}
+
+.container-change-pass .form-group {
+    margin-bottom: 20px;
+}
+
+.container-change-pass label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.container-change-pass input[type="password"],
+.container-change-pass button {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+.container-change-pass button {
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.container-change-pass .btn-hide {
+    margin-left: 90%;
+    width: 40px;
+    padding: 5px 9px;
+}
+
+.container-change-pass button:hover {
+    background-color: #0056b3;
+}
+
+.hidden {
+    display: none;
+}
+.container-about-conntent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.about-container {
+    width: 60%;
+    border: 1px gray solid;
+    border-radius: 5px;
+    padding: 10px 20px;
+}
+
+.forgot_pass_container,
+.confirm-token-container,
+.container-reset-pass,
+.confirm-email-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.confirm-token-container,
+.container-reset-pass,
+.forgot_pass_container {
+    flex-direction: column;
+}
+.container-reset-pass form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.forgot_pass_container button,
+.confirm-token-container button,
+.container-reset-pass button,
+.confirm-email-container button {
+    border-radius: 8px;
+    padding: 5px 10px;
+    margin-top: 10px;
+    margin-left: 100px;
+    border: 1px solid gray;
+    background-color: white;
+    font-size: 17px;
 }

@@ -4,29 +4,35 @@
        
         <form method="POST" action="{{URL::to('/create')}}">
             @csrf
+            <h2>Register</h2>
             <div>
-                <label for="name">Name</label>
+                <label for="name">Name: </label>
                 <input id="name" type="text" name="name"  required autofocus>
             </div>
 
             <div >
-                <label for="phone">Phone</label>
+                <label for="phone">Phone:</label>
                 <input id="phone" type="text" name="phone"  required autofocus>
             </div>
 
             <div>
-                <label for="email">Email</label>
+                <label for="email">Email:</label>
                 <input id="email" type="email" name="email"  required>
             </div>
 
+            <div>
+                <label for="user">User:</label>
+                <input id="user" type="text" name="user"  required>
+            </div>
+
             <div class="hidden-pass">
-                <label for="password">Password</label>
+                <label for="password">Password:</label>
                 <input id="password-input" type="password" name="password" required>
                 <i id="toggle-password" class='bx bx-hide' ></i>
             </div>
 
             <div class="hidden-pass">
-                <label for="password_confirmation">Confirm Password</label>
+                <label for="password_confirmation">Confirm Password:</label>
                 <input id="password-input" type="password" name="password_confirmation" required>
                 <i id="toggle-password" class='bx bx-hide' ></i>
             </div>

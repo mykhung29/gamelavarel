@@ -41,6 +41,7 @@
     </div>
                 <div class="container-checkout">
                     <h2>Address</h2>
+                    <a href="{{ URL::to('/edit_place') }}" >Address Manager</a>
                 @foreach ($order_place as $place)
                         <div class="place-ship">
                             <input type="radio" id="address1" name="address" value="{{$place ->id}}">

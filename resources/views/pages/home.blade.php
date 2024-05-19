@@ -41,6 +41,7 @@
                         <input type="hidden" value="{{$all ->product_price}}" name="price">
                         <input type="hidden" value="{{$all ->product_img}}" name="img">
                         <input type="hidden" value="{{$all ->product_id}}" name="id">
+                        <input type="hidden" value="1" name="quantity">
                         {{ csrf_field() }}
 
                     </form>

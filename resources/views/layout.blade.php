@@ -40,7 +40,6 @@
                 
             @endif
            
-            
         </div>
         <div class="big-div">
             <div class="logo">Logo</div>
@@ -49,13 +48,13 @@
             <nav>
                 <ul class="nav-links">
                     <li><a href="{{URL::to('/')}}">Home</a></li>
-                    <li><a href="#">About</a></li>
+                    <li><a href="{{URL::to('/about')}}">About</a></li>
                     <li class="has-submenu">
                         <a href="#">Services</a>
                         <ul class="submenu">
-                            <li><a href="#">Service 1</a></li>
-                            <li><a href="#">Service 2</a></li>
-                            <li><a href="#">Service 3</a></li>
+                            {{-- @foreach ($all_category as $category)
+                                <li><a href="{{URL::to('/category/'.$category->category_name)}}">{{$category->category_name}}</a></li>
+                            @endforeach --}}
                         </ul>
                     </li>
                     <li><a href="#">Contact</a></li>

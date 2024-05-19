@@ -14,7 +14,7 @@
         <form action="{{URL::to('/login-check')}}" method="post">
             @csrf
             <h2>Đăng nhập</h2>
-            <input type="text" name="email" placeholder="Email">
+            <input type="text" name="user" placeholder="Email">
             <div class="hidden-pass">
                 <input id="password-input" type="password" name="password" placeholder="Mật khẩu">
                 <i id="toggle-password" class='bx bx-hide' ></i>
@@ -26,9 +26,10 @@
             </div>
             <button type="submit">Đăng nhập</button>
         </form>
+        <a href="{{ url('auth/google') }}">Login with google</a>
        <div class="footer-login">
         <div class="forgot-password">
-            <a href="">Quên mật khẩu ?</a>
+            <a href="{{URL::to('/forgot_pass')}}">Quên mật khẩu ?</a>
         </div>
        
         <div class="register">
