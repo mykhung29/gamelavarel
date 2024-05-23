@@ -13,27 +13,37 @@
     <div class="container-login">
         <form action="{{URL::to('/login-check')}}" method="post">
             @csrf
-            <h2>Đăng nhập</h2>
+            <h2>Login</h2>
             <input type="text" name="user" placeholder="Email">
             <div class="hidden-pass">
-                <input id="password-input" type="password" name="password" placeholder="Mật khẩu">
+                <input id="password-input" type="password" name="password" placeholder="Password">
                 <i id="toggle-password" class='bx bx-hide' ></i>
             </div>
           
             <div class="remember-password">
                 <input type="checkbox" name="remember" id="remember">
-                <label for="remember">Nhớ mật khẩu</label>
+                <label for="remember">Remember me</label>
             </div>
-            <button type="submit">Đăng nhập</button>
+            <button type="submit">Login</button>
         </form>
-        <a href="{{ url('auth/google') }}">Login with google</a>
+        <hr>
+        <div class="or">
+            
+            <span>Or</span>
+            <div class="icon-login">
+                <a href="{{ url('auth/google') }}"><i class='bx bxl-google'></i></a>
+                <a href="{{ url('auth/google') }}"><i class='bx bxl-facebook-circle'></i></a>
+            </div>
+           
+        </div>
+      
        <div class="footer-login">
         <div class="forgot-password">
-            <a href="{{URL::to('/forgot_pass')}}">Quên mật khẩu ?</a>
+            <a href="{{URL::to('/forgot_pass')}}">Forgot password ?</a>
         </div>
        
         <div class="register">
-            <a href="{{URL::to('/register')}}">Đăng kí</a>
+            <a href="{{URL::to('/register')}}">Register</a>
         </div>
         </div>
        

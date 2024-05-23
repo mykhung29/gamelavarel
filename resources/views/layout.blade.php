@@ -21,28 +21,34 @@
            
             @if(Session::has('name'))
                 <a href="{{URL::to('/show_info')}}"  rel="noopener noreferrer">
-                    <i class='bx bx-user'>Chào, {{ Session::get('name') }}</i>
+                    <i class='bx bx-user'>Hi, {{ Session::get('name') }}</i>
                 </a>
             @else
                 <a href="{{URL::to('/login')}}"  rel="noopener noreferrer">
-                    <i class='bx bx-user'> Đăng nhập</i>
+                    <i class='bx bx-user'>Login</i>
                 </a>
             @endif
 
 
             <a href="{{URL::to('/show_cart')}}" target="_blank" rel="noopener noreferrer">
-                <i class='bx bx-cart-alt'>Giỏ hàng()</i>
+                <i class='bx bx-cart-alt'>Cart({{ $count }}) </i>
             </a>
             @if(Session::has('name'))
                 <a href="{{URL::to('/logout_user')}}"  rel="noopener noreferrer">
-                    <i class='bx bx-user'>Đăng xuất</i>
+                    <i class='bx bx-user'>Log out</i>
                 </a>
                 
             @endif
            
         </div>
         <div class="big-div">
-            <div class="logo">Logo</div>
+            <div class="logo">
+                <a href="{{URL::to('/')}}">
+                    <img src="{{asset('public/img_upload/logo/logo.png')}}" alt="">
+                    
+                    {{-- <img src="https://images-platform.99static.com/sbo0luYciFutHP06_TE7GYuTUz0=/0x0:1875x1875/500x500/top/smart/99designs-contests-attachments/113/113185/attachment_113185903" alt=""> --}}
+                </a>
+            </div>
             <input type="checkbox" id="toggle" style="display: none">
             <label for="toggle" class="burger">&#9776;</label>
             <nav>
@@ -52,7 +58,7 @@
                     <li class="has-submenu">
                         <a href="#">Services</a>
                         <ul class="submenu">
-                            {{-- @foreach ($all_category as $category)
+                            {{-- @foreach ($category as $category)
                                 <li><a href="{{URL::to('/category/'.$category->category_name)}}">{{$category->category_name}}</a></li>
                             @endforeach --}}
                         </ul>
@@ -61,10 +67,13 @@
                 </ul>
             </nav>
             <div class="search-box">
-                <input type="text" class="search-txt" placeholder="Tìm kiếm">
-                <button class="search-btn">
-                    <i class="bx bx-search"></i>
-                </button>
+                <form action="{{URL::to('/search')}}" method="get">
+                    <input type="text" class="search-txt" placeholder="Search" name="keywords_submit">
+                    <button class="search-btn" type="submit">
+                        <i class="bx bx-search"></i>
+                    </button>
+                </form>
+                
             </div>
         </div>
        

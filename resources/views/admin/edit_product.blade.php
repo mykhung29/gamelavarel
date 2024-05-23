@@ -22,21 +22,28 @@
             
             <label for="product_desc">Mô tả sản phẩm:</label><br>
             <textarea id="product_desc" name="product_desc">{{$product->product_desc}}</textarea><br>
-            @endforeach
+        @endforeach
             <label for="product_status">Dòng sản phẩm:</label><br>
             <select id="product_status" name="product_category">
              @foreach ($edit_category as $cate)
-             @if($cate->category_name == $product->product_caterogy)
+             @if($cate->category_name == $product->product_category)
                     <option selected value="{{$cate->category_name}}">{{$cate->category_name}}</option>
              @else 
                      <option value="{{$cate->category_name}}">{{$cate->category_name}}</option>
              @endif
              @endforeach
+            </select>
+
+            <label>Thể loại sản phẩm:</label><br>
+            <select name="product_type">
+             @foreach ($edit_type as $type)
+             @if($type->name == $product->product_type)
+                    <option selected value="{{$type->name}}">{{$type->name}}</option>
+             @else 
+                     <option value="{{$type->name}}">{{$type->name}}</option>
+             @endif
+             @endforeach
             </select><br><br>
-
-            <!-- HTML !-->
-<button class="button-6" role="button">Button 6</button>
-
 
             <button type="submit" name="edit_product">Sửa</button>
         </form>

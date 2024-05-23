@@ -21,13 +21,19 @@ header {
     background-color: gainsboro;
 }
 .mini-div a {
-    margin: 3px 15px;
+    margin: 3px 5px;
+    color: black;
+    /* font-family: "Exo 2", sans-serif; */
+}
+.mini-div a:last-child {
+    margin-right: 20px;
+    margin-left: 4px;
 }
 .big-div {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    padding: 30px;
+    padding: 15px;
 }
 .logo {
     font-size: 24px;
@@ -182,10 +188,21 @@ main {
     border: 1px gray solid;
     border-radius: 10px;
 }
+.brand-product-selection {
+    padding: 10px 7px;
+}
+.brand-product-selection h2 {
+    margin: 0;
+    text-align: center;
+}
 .brand-product-selection ul {
     list-style-type: none;
     padding: 0;
     text-align: center;
+    margin: 5px;
+}
+.brand-product-selection ul li {
+    margin-bottom: 5px;
 }
 .brand-selection {
     text-align: center;
@@ -197,6 +214,7 @@ main {
 .brand-selection a,
 .product-type-selection a {
     text-decoration: none;
+    color: gray;
 }
 .right-column {
     flex: 7;
@@ -328,4 +346,7 @@ footer p {
     .links {
         text-align: center;
     }
+}
+.logo img {
+    width: 100px;
 }

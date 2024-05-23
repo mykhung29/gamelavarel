@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GameCategoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\GoogleLoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,6 +16,8 @@ Route::get('/', [HomeController::class, 'index']);
 Route::get('/category/{category_name}', [HomeController::class, 'category']);
 Route::get('/about', [HomeController::class, 'about']);
 Route::get('/login', [HomeController::class, 'login']);
+Route::get('/search', [HomeController::class, 'search']);
+Route::get('/type/{type}', [HomeController::class, 'type_product']);
 
 // // admin
 Route::get('/admin', [AdminController::class, 'login']);
@@ -42,15 +45,17 @@ Route::get('/edit-product/{product_id}', [ProductController::class, 'editProduct
 Route::post('/update-product/{product_id}', [ProductController::class, 'updateProduct']);
 Route::get('/manager-product', [ProductController::class, 'managerProduct']);
 Route::post('/store-inventory', [ProductController::class, 'storeInventory']);
+//voucher
+Route::get('/show-voucher', [VoucherController::class, 'showVoucher']);
 //type product
 Route::get('/add-type', [GameCategoryController::class, 'create']);
 Route::get('/show-type', [GameCategoryController::class, 'index']);
 Route::post('/save-type', [GameCategoryController::class, 'store']);
 Route::get('/delete-type/{id}', [GameCategoryController::class, 'delete']);
 //orders
-Route::get('/show-orders', [OrderController::class, 'sort']);
+Route::get('/show-orders', [OrderController::class, 'showOrders']);
 Route::get('/show-order-detail/{id_order}/{user_id}/{place_id}', [OrderController::class, 'showOrderDetail']);
-Route::get('/sort', [OrderController::class, 'sort']);
+// Route::get('/sort', [OrderController::class, 'sort']);
 Route::post('/update_status/{id_order}', [OrderController::class, 'updateStatus']);
 // // user
 Route::get('/register', [UserController::class, 'index']);

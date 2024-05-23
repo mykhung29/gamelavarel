@@ -21,6 +21,7 @@
                             <td>{{$product ->product_name}}</td>
                             <td>${{$product ->product_price}}</td>
                             <td>
+                                <input type="hidden" value="{{$product->id}}" name="id_product_update">
                                 <input type="number" name="quantity" min="1" max="100" value="{{$product->quantity}}" />
                             </td>
                             <td>
@@ -33,7 +34,12 @@
                     @endforeach
             </tbody>
         </table>
-        <div class="total"> Total: ${{ $total }} 
+        <div class="voucher">
+            <input type="text" name="voucher" placeholder="Enter your voucher code">
+            <button type="submit" name="apply">Apply</button>
+        </div>
+        <div class="total"> Total: ${{ $total }} <br>
+                            Total-voucher: ${{ $total_voucher }}
             <button type="submit" name="checkout">Checkout</button>
             <button type="submit" name="update">Update</button>
 

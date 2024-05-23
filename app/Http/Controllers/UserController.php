@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
-use App\Models\Order;
-use App\Models\OrderDetail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
@@ -201,7 +199,9 @@ class UserController extends Controller
         foreach ($cart as $item) {
             $total += $item->product_price * $item->quantity;
         }
-        return view('pages.cart.cart', ['cart' => $cart, 'total' => $total, 'order_place' => $order_place]);
+        $total_voucher = $total;
+        Session::put('voucher', $total_voucher);
+        return view('pages.cart.cart', ['cart' => $cart, 'total' => $total, 'order_place' => $order_place, 'total_voucher' => $total_voucher]);
     }
 
     public function delete_to_cart($id)
@@ -295,34 +295,73 @@ class UserController extends Controller
 
     public function checkout(Request $request)
     {
-        $this->AuthLogin();
-        $user_id = Session::get('id');
-        $place_id = $request->address;
-        $cart = DB::table('carts')->where('user_id', $user_id)->get();
-        $last_order_id = DB::table('order_details')->max('id_order');
-        $new_order_id = $last_order_id ? $last_order_id + 1 : 1;
-        $status = 0;
-        foreach ($cart as $item) {
-            DB::table('order_details')->insert([
-                'id_order' => $new_order_id,
-                'user_id' => $user_id,
-                'place_id' => $place_id,
-                'status' => $status,
-                'product_id' => $item->product_id,
-                'product_name' => $item->product_name,
-                'image' => $item->image,
-                'quantity' => $item->quantity,
-                'price' => $item->product_price,
-                'created_at' => now(),
-                'updated_at' => now()
-            ]);
+        if ($request->has('apply')) {
 
+            $user_id = Session::get('id');
+            $coupon = $request->voucher;
+            $check_coupon = DB::table('vouchers')->where('voucher', $coupon)->first();
 
+            if ($check_coupon) {
+                $this->AuthLogin();
+                $user_id = Session::get('id');
+                $cart = DB::table('carts')->where('user_id', $user_id)->get();
+                $order_place = DB::table('orders')->where('id_user', $user_id)->get();
+
+                $total = 0;
+                foreach ($cart as $item) {
+                    $total += $item->product_price * $item->quantity;
+                }
+                $total_voucher = $total - $total * 0.1;
+                // Session::put('voucher', $total_voucher);
+                return view('pages.cart.cart', ['cart' => $cart, 'total' => $total, 'total_voucher' => $total_voucher, 'order_place' => $order_place]);
+
+            } else {
+                Session::put('message', 'Mã giảm giá không hợp lệ !!!');
+                return Redirect::to('/show_cart');
+            }
+        } elseif ($request->has('checkout')) {
+            $this->AuthLogin();
+            $user_id = Session::get('id');
+            $place_id = $request->address;
+            $cart = DB::table('carts')->where('user_id', $user_id)->get();
+            $last_order_id = DB::table('order_details')->max('id_order');
+            $new_order_id = $last_order_id ? $last_order_id + 1 : 1;
+            $status = 0;
+            foreach ($cart as $item) {
+                DB::table('order_details')->insert([
+                    'id_order' => $new_order_id,
+                    'user_id' => $user_id,
+                    'place_id' => $place_id,
+                    'status' => $status,
+                    'product_id' => $item->product_id,
+                    'product_name' => $item->product_name,
+                    'image' => $item->image,
+                    'quantity' => $item->quantity,
+                    'price' => $item->product_price,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+            }
+            DB::table('carts')->where('user_id', $user_id)->delete();
+
+            return view('pages.cart.checkout_success');
+        } else if ($request->has('update')) {
+            $user_id = Session::get('id');
+            $id_product_update = $request->id_product_update;
+            $quantity = $request->quantity;
+            DB::table('carts')->where('user_id', $user_id)->where('id', $id_product_update)->update(['quantity' => $quantity]);
+            $cart = DB::table('carts')->where('user_id', $user_id)->get();
+            $order_place = DB::table('orders')->where('id_user', $user_id)->get();
+
+            $total = 0;
+            foreach ($cart as $item) {
+                $total += $item->product_price * $item->quantity;
+            }
+            $total_voucher = $total;
+
+            return view('pages.cart.cart', ['cart' => $cart, 'total' => $total, 'order_place' => $order_place, 'total_voucher' => $total_voucher]);
         }
 
-        DB::table('carts')->where('user_id', $user_id)->delete();
-
-        return view('pages.cart.checkout_success');
     }
 
     public function show_order()

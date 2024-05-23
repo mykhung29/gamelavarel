@@ -48,7 +48,7 @@ class ProductController extends Controller
     {
         $this->AuthLogin();
         $data = array();
-        $data['product_caterogy'] = $request->product_category;
+        $data['product_category'] = $request->product_category;
         $data['product_name'] = $request->product_name;
         $data['product_price'] = $request->product_price;
         $data['product_video'] = $request->product_video;
@@ -104,9 +104,11 @@ class ProductController extends Controller
         $this->AuthLogin();
         $all_product = DB::table('tbl_product')->where('product_id', $product_id)->get();
         $all_category = DB::table('tbl_category')->orderBy('category_id', 'desc')->get();
+        $all_type = DB::table('categories_game')->orderBy('id', 'desc')->get();
         return view('admin.edit_product', [
             'edit_product' => $all_product,
-            'edit_category' => $all_category
+            'edit_category' => $all_category,
+            'edit_type' => $all_type
         ]);
     }
 
@@ -114,24 +116,24 @@ class ProductController extends Controller
     {
         $this->AuthLogin();
         $data = array();
-        $data['product_caterogy'] = $request->product_category;
+        $data['product_category'] = $request->product_category;
         $data['product_name'] = $request->product_name;
         $data['product_price'] = $request->product_price;
         $data['product_video'] = $request->product_video;
         $data['product_desc'] = $request->product_desc;
+        $data['product_type'] = $request->product_type;
+
 
         $get_img = $request->file('product_img');
         if ($get_img) {
-            // Lấy tên gốc của tệp
+
             $originalName = $get_img->getClientOriginalName();
 
-            // Lấy đuôi của tệp
+
             $extension = $get_img->getClientOriginalExtension();
 
-            // Tạo tên mới cho tệp ảnh để tránh trùng lặp
             $filename = pathinfo($originalName, PATHINFO_FILENAME) . '_' . uniqid() . '.' . $extension;
 
-            // Di chuyển tệp ảnh vào thư mục lưu trữ của bạn
             $data['product_img'] = $filename;
             $get_img->move('public/img_upload/product', $filename);
             DB::table('tbl_product')->where('product_id', $product_id)->update($data);

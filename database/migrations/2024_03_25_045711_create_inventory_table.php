@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -14,7 +13,7 @@ return new class extends Migration
         Schema::create('inventory', function (Blueprint $table) {
             $table->id('inventory_id'); // Mã số duy nhất cho mỗi bản ghi trong bảng
             $table->unsignedBigInteger('product_id'); // Tham chiếu đến mã số duy nhất của sản phẩm trong bảng sản phẩm (products)
-            $table->integer('quantity'); // Số lượng sản phẩm trong kho
+            $table->integer('quantity_product'); // Số lượng sản phẩm trong kho
             $table->timestamps(); // Các trường thời gian tạo và cập nhật bản ghi
         });
     }

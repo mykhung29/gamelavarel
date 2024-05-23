@@ -21,23 +21,28 @@
             <li class="dropdown">
                 <a class="title" href="{{URL::to('/show-category-product')}}">Quản lí danh mục</a>
             </li>
+
             <li class="dropdown">
                 <a class="title" href="{{URL::to('/show-type')}}">Quản lí thể loại</a>
             </li>
+
             <li class="dropdown">
               <a class="title" href="{{URL::to('/show-product')}}">Quản lí sản phẩm</a>
-          </li>
-        <li class="dropdown">
-          <a class="title" href="{{URL::to('/show-orders')}}">Quản lí đơn hàng</a>
-      </li>
-      <li class="dropdown">
-        <a class="title" href="{{URL::to('/show-user')}}">Quản lí tài khoản</a>
-        {{-- <ul class="submenu">
-            <li><a href="{{URL::to('/add-user')}}">Thêm tài khoản</a></li>
-            <li><a href="{{URL::to('/show-user')}}">Liệt kê tài khoản</a></li>
-        </ul> --}}
-    </li>
-        <li><a  class="title" href="{{URL::to('/logout')}}">Đăng xuất</a></li>
+            </li>
+
+            <li class="dropdown">
+                <a class="title" href="{{URL::to('/show-voucher')}}">Quản lí voucher</a>
+            </li>
+
+            <li class="dropdown">
+              <a class="title" href="{{URL::to('/show-orders')}}">Quản lí đơn hàng</a>
+            </li>
+
+            <li class="dropdown">
+                <a class="title" href="{{URL::to('/show-user')}}">Quản lí tài khoản</a>
+            </li>
+
+            <li><a  class="title" href="{{URL::to('/logout')}}">Đăng xuất</a></li>
         </ul>
     </div>
     <div class="content">

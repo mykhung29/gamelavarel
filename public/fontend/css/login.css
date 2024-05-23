@@ -66,3 +66,13 @@
 .container-register .hidden-pass i {
     top: 56%;
 }
+.or {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.icon-login i {
+    font-size: 30px;
+    color: gray;
+}

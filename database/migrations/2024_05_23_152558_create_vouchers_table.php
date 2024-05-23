@@ -10,13 +10,12 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('carts', function (Blueprint $table) {
+        Schema::create('vouchers', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->string('product_id', 6);
-            $table->string('product_name');
-            $table->float('product_price');
-            $table->string('image');
+            $table->string('voucher');
+            $table->decimal('discount_percentage', 5, 2);
+            $table->decimal('max_discount', 8, 2);
+            $table->string('discount_type');
             $table->integer('quantity');
             $table->timestamps();
         });
@@ -27,6 +26,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('carts');
+        Schema::dropIfExists('vouchers');
     }
 };
